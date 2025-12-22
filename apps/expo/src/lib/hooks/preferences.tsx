@@ -246,7 +246,6 @@ export const useContentFilter = () => {
 
       return warn;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [preferences.dataUpdatedAt, preferences.data],
   );
 

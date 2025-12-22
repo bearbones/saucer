@@ -1,13 +1,11 @@
-import { Platform, Pressable, TouchableOpacity } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import { Platform, Pressable } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import { msg, Trans } from "@lingui/macro";
+import { msg } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useTheme } from "@react-navigation/native";
 import { XIcon } from "lucide-react-native";
 
 import { StatusBar } from "~/components/status-bar";
-import { Text } from "~/components/themed/text";
 import { useCanGoBack } from "~/lib/hooks/can-go-back";
 import { isIOS26 } from "~/lib/utils/version";
 

@@ -12,7 +12,7 @@ import { AppBskyFeedDefs, type ComAtprotoLabelDefs } from "@atproto/api";
 import { msg, Trans } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useTheme } from "@react-navigation/native";
-import { FlashList, FlashListRef } from "@shopify/flash-list";
+import { FlashList, type FlashListRef } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import {
   LockIcon,

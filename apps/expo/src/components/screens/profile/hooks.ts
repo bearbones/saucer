@@ -13,11 +13,6 @@ import { useAgent } from "~/lib/agent";
 import { useContentFilter } from "~/lib/hooks/preferences";
 import { useRefreshOnFocus } from "~/lib/utils/query";
 
-type AuditLog = {
-  cid: string;
-  createdAt: string;
-}[];
-
 export const useProfile = (handle?: string) => {
   const agent = useAgent();
 

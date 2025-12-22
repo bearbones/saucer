@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { ImageBackground } from "expo-image";
-import { AppBskyEmbedVideo } from "@atproto/api";
+import { type AppBskyEmbedVideo } from "@atproto/api";
 import { BlueskyVideoView } from "@haileyok/bluesky-video";
 import { msg } from "@lingui/macro";
 import { useLingui } from "@lingui/react";

@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       token,
       SERVICE_DID,
       null,
-      async (did: string) => didResolver.resolveAtprotoKey(did)
+      async (did: string) => didResolver.resolveAtprotoKey(did),
     );
 
     if (aud !== SERVICE_DID) throw new AuthRequiredError("invalid audience");

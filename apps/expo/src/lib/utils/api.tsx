@@ -28,9 +28,7 @@ export const getBaseUrl = () => {
  * A wrapper for your app that provides the TRPC context.
  * Use only in _app.tsx
  */
-export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const TRPCProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     api.createClient({

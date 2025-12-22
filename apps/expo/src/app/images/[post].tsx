@@ -22,12 +22,9 @@ export default function ImageModal() {
   const router = useRouter();
   const [infoVisible, setInfoVisible] = useState(true);
   const { _ } = useLingui();
-  const { post, initial } = useLocalSearchParams() as {
-    post: string;
-    initial?: string;
-  };
+  const { post, initial } = useLocalSearchParams();
 
-  const source = decodeURIComponent(post);
+  const source = decodeURIComponent(typeof post === "string" ? post : "");
 
   const images = useQuery({
     queryKey: ["images", source],

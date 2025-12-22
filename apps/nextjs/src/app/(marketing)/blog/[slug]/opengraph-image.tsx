@@ -50,26 +50,24 @@ export default async function Image({
     });
 
     return new ImageResponse(
-      (
-        <div tw="w-full h-full flex">
-          {image && (
-            <img // @ts-expect-error img behaves differently here
-              src={image}
-              height="1200"
-              width="630"
-              tw="w-full relative -top-1/2"
-              alt=""
-            />
-          )}
-          <div tw="bg-neutral-900 opacity-60 w-full h-full absolute top-0 left-0" />
-          <div tw="p-16 absolute flex flex-col bottom-0 w-full left-0 justify-end h-full">
-            <h1 tw="text-7xl font-bold text-white">{blogData.title}</h1>
-            <p tw="text-4xl text-neutral-300">
-              {formatter.format(new Date(blogData.date))} - by {blogData.author}
-            </p>
-          </div>
+      <div tw="w-full h-full flex">
+        {image && (
+          <img // @ts-expect-error img behaves differently here
+            src={image}
+            height="1200"
+            width="630"
+            tw="w-full relative -top-1/2"
+            alt=""
+          />
+        )}
+        <div tw="bg-neutral-900 opacity-60 w-full h-full absolute top-0 left-0" />
+        <div tw="p-16 absolute flex flex-col bottom-0 w-full left-0 justify-end h-full">
+          <h1 tw="text-7xl font-bold text-white">{blogData.title}</h1>
+          <p tw="text-4xl text-neutral-300">
+            {formatter.format(new Date(blogData.date))} - by {blogData.author}
+          </p>
         </div>
-      ),
+      </div>,
       {
         ...size,
         fonts: [

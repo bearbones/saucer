@@ -4,29 +4,6 @@ import * as QuickActions from "expo-quick-actions";
 import { msg } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 
-export function useQuickActionCallback(
-  callback?: (data: QuickActions.Action) => void | Promise<void>,
-) {
-  useEffect(() => {
-    let isMounted = true;
-
-    if (QuickActions.initial) {
-      void callback?.(QuickActions.initial);
-    }
-
-    const sub = QuickActions.addListener((event) => {
-      if (isMounted) {
-        void callback?.(event);
-      }
-    });
-    return () => {
-      isMounted = false;
-      sub.remove();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [QuickActions.initial, callback]);
-}
-
 export function useQuickAction() {
   const [action, setAction] = useState<QuickActions.Action | null>(
     QuickActions.initial ?? null,

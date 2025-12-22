@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Alert, Image } from "react-native";
+import { Alert } from "react-native";
 import { showToastable } from "react-native-toastable";
 import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
@@ -208,11 +208,7 @@ export const useSendPost = ({
       // upload thumbnail
 
       try {
-        if (
-          external &&
-          external.type === "external" &&
-          external.view.external.thumb
-        ) {
+        if (external?.type === "external" && external.view.external.thumb) {
           const thumbUrl = external.view.external.thumb;
           let thumb: BlobRef | undefined;
 
@@ -264,7 +260,7 @@ export const useSendPost = ({
             record: quote,
             media,
           } satisfies AppBskyEmbedRecordWithMedia.Main;
-        } else if (external && external.type === "external") {
+        } else if (external?.type === "external") {
           mergedEmbed = {
             $type: "app.bsky.embed.recordWithMedia",
             record: quote,
@@ -276,7 +272,7 @@ export const useSendPost = ({
       } else if (gif?.main) {
         mergedEmbed = gif.main;
       } else if (media) {
-        if (external && external.type === "record") {
+        if (external?.type === "record") {
           mergedEmbed = {
             $type: "app.bsky.embed.recordWithMedia",
             record: external.main,
@@ -328,7 +324,7 @@ export const useSendPost = ({
         }
 
         await agent.api.app.bsky.feed.threadgate.create(
-          { repo: agent.session!.did, rkey: post.uri.split("/").pop() },
+          { repo: agent.assertDid, rkey: post.uri.split("/").pop() },
           { post: post.uri, createdAt: new Date().toISOString(), allow },
         );
       }
@@ -423,7 +419,7 @@ export const useImages = () => {
       setImages((prev) => {
         const copy = [...prev];
         if (!copy[index]) throw new Error("Invalid index");
-        copy[index]!.alt = alt;
+        copy[index].alt = alt;
         return copy;
       });
     },

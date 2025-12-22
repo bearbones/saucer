@@ -9,14 +9,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { type SearchBarCommands } from "react-native-screens";
 import { Link, Stack, useRouter } from "expo-router";
-import { AppBskyUnspeccedDefs, type AppBskyActorDefs } from "@atproto/api";
+import { type AppBskyActorDefs } from "@atproto/api";
 import { msg, Trans } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useTheme } from "@react-navigation/native";
-import { FlashList, FlashListRef } from "@shopify/flash-list";
+import { FlashList, type FlashListRef } from "@shopify/flash-list";
 import {
   keepPreviousData,
   useInfiniteQuery,
@@ -24,11 +24,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  SearchIcon,
-} from "lucide-react-native";
+import { SearchIcon } from "lucide-react-native";
 
 import { Avatar } from "~/components/avatar";
 import { GroupedList } from "~/components/grouped-list";
@@ -413,9 +409,3 @@ const SuggestionCard = ({ item }: SuggestionCardProps) => {
     </Link>
   );
 };
-
-function isBannedTag(tag: string) {
-  return tag
-    .toLocaleLowerCase()
-    .match(/(porn)|(nsfw)|(award)|(troconud)|(sdv)|(followback)/i);
-}

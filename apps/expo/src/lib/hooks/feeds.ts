@@ -65,7 +65,7 @@ export const useSavedFeeds = () => {
       }
 
       const myLists = await agent.app.bsky.graph.getLists({
-        actor: agent.session!.did,
+        actor: agent.assertDid,
       });
 
       // fetch all lists

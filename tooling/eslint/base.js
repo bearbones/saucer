@@ -29,22 +29,16 @@ export default tseslint.config(
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      "@typescript-eslint/consistent-type-imports": [
-        "warn",
-        { prefer: "type-imports", fixStyle: "separate-type-imports" },
-      ],
+      "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/no-misused-promises": [
         2,
         { checksVoidReturn: { attributes: false } },
       ],
-      "@typescript-eslint/no-unnecessary-condition": [
-        "error",
-        {
-          allowConstantLoopConditions: true,
-        },
-      ],
-      "@typescript-eslint/no-non-null-assertion": "error",
-      "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+      "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "import/consistent-type-specifier-style": ["error", "prefer-inline"],
     },
   },
   {

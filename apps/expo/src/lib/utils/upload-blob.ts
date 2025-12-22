@@ -1,5 +1,5 @@
 import * as FileSystem from "expo-file-system/legacy";
-import { AtpAgent, ComAtprotoRepoUploadBlob } from "@atproto/api";
+import { type AtpAgent, type ComAtprotoRepoUploadBlob } from "@atproto/api";
 
 /**
  * @param encoding Allows overriding the blob's type

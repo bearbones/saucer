@@ -5,7 +5,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import { Trans } from "@lingui/macro";
 import { useTheme } from "@react-navigation/native";
 import { CompassIcon } from "lucide-react-native";

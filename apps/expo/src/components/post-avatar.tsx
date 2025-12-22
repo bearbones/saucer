@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
-import { type AppBskyActorDefs, type ModerationUI } from "@atproto/api";
+import { type AppBskyActorDefs } from "@atproto/api";
 
 import { useAbsolutePath } from "~/lib/absolute-path-context";
 import { Avatar } from "./avatar";

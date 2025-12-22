@@ -12,7 +12,7 @@ export const Hero = ({ children }: { children: React.ReactNode }) => {
     <div className="container z-10 mx-auto flex h-full max-w-4xl flex-col items-center gap-4 p-4 md:flex-row">
       <div className="flex w-full flex-col gap-6 md:w-[calc(50%-8px)]">
         {children}
-        <div className=" mt-4 flex h-12 flex-row items-center gap-2">
+        <div className="mt-4 flex h-12 flex-row items-center gap-2">
           <button
             className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-neutral-400 bg-neutral-900 disabled:opacity-60"
             onClick={() => setOffset((o) => o + 1)}

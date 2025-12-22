@@ -61,7 +61,7 @@ const RichTextInner = ({
             if (textToShow.endsWith("/")) {
               textToShow = textToShow.slice(0, -1);
             }
-          } catch (e) {
+          } catch {
             textToShow = segment.text;
           }
         }

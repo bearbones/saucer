@@ -361,7 +361,7 @@ const ListHeader = ({
             // eslint-disable-next-line no-fallthrough
             case _(msg`Change to moderation list`): {
               const collection = "app.bsky.graph.list";
-              const repo = agent.session!.did;
+              const repo = agent.assertDid;
               const rkey = info.uri.split("/").pop()!;
               const record = await agent.com.atproto.repo.getRecord({
                 collection,

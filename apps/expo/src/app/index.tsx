@@ -9,7 +9,7 @@ import { Trans } from "@lingui/macro";
 import { LinkButton } from "~/components/button";
 import { StatusBar } from "~/components/status-bar";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const background = require("../../assets/graysky.jpg") as ImageSourcePropType;
 
 export default function LandingPage() {

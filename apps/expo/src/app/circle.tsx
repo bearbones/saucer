@@ -36,7 +36,7 @@ import { uploadBlob } from "~/lib/utils/upload-blob";
 import { isIOS26 } from "~/lib/utils/version";
 import { useSelf } from "./settings/account";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const appIcon = require("../../assets/icon.png") as ImageSource;
 
 export default function MyCircle() {
@@ -349,7 +349,7 @@ async function getRecords(agent: BskyAgent, collection: string) {
   do {
     const records = await agent.com.atproto.repo.listRecords({
       collection,
-      repo: agent.session!.did,
+      repo: agent.assertDid,
       cursor,
       limit: 100,
     });
@@ -365,9 +365,9 @@ async function getRecords(agent: BskyAgent, collection: string) {
           break;
         }
 
-        const [, , did] = record.value.subject.uri.split("/");
+        const [, , did = ""] = record.value.subject.uri.split("/");
 
-        potentialFriends[did!] = (potentialFriends[did!] || 0) + 1;
+        potentialFriends[did] = (potentialFriends[did] || 0) + 1;
       }
     }
   } while (!isOlderThanAWeek && cursor);

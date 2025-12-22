@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Trans } from "@lingui/macro";
@@ -12,9 +11,6 @@ import { Text } from "../themed/text";
 
 export const WaitingRoom = () => {
   const agent = useAgent();
-  const [initialQueuePosition, setInitialQueuePosition] = useState<
-    number | null
-  >(null);
   const logOut = useLogOut();
 
   const queue = useQuery({
@@ -27,13 +23,6 @@ export const WaitingRoom = () => {
     },
     refetchInterval: 5000,
   });
-
-  const placeInQueue = queue.data?.placeInQueue;
-
-  useEffect(() => {
-    if (typeof placeInQueue !== "number") return;
-    setInitialQueuePosition((pos) => pos ?? placeInQueue);
-  }, [placeInQueue]);
 
   const { mutate: logIn } = useMutation({
     mutationFn: async () => {

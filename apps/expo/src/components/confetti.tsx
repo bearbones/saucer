@@ -11,7 +11,7 @@ import Animated, {
 import { Image, type ImageSource } from "expo-image";
 import colors from "tailwindcss/colors";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const ConfettiImage = require("../../assets/confetti.png") as ImageSource;
 
 // with thanks to @imjamescrain

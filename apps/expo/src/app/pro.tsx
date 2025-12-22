@@ -41,7 +41,7 @@ import { useCustomerInfo, useIsPro, useOfferings } from "~/lib/purchases";
 import { cx } from "~/lib/utils/cx";
 import { isIOS26 } from "~/lib/utils/version";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const background = require("../../assets/graysky.jpg") as ImageSourcePropType;
 
 export default function Pro() {

@@ -187,8 +187,8 @@ msgstr "1 рік тому"
 #~ msgid "A code has been sent to {phone}. <0>Change phone number.</0>"
 #~ msgstr ""
 
-#: src/app/settings/_layout.tsx:118
-#: src/lib/quick-actions.ts:88
+#: src/app/settings/_layout.tsx:116
+#: src/lib/quick-actions.ts:65
 msgid "About"
 msgstr "Про програму"
 
@@ -216,7 +216,7 @@ msgstr "Обліковий запис видалено. До побачення!
 msgid "Account Details"
 msgstr "Деталі облікового запису"
 
-#: src/app/settings/_layout.tsx:64
+#: src/app/settings/_layout.tsx:62
 msgid "Account Settings"
 msgstr "Налаштування облікового запису"
 
@@ -308,7 +308,7 @@ msgstr "ALT текст"
 #: src/components/error-boundary.tsx:22
 #: src/components/query-without-data.tsx:34
 #: src/components/screens/change-password-flow.tsx:78
-#: src/components/translation.tsx:163
+#: src/components/translation.tsx:165
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
@@ -361,7 +361,7 @@ msgstr "Паролі застосунку"
 msgid "App settings"
 msgstr "Налаштування застосунку"
 
-#: src/app/settings/_layout.tsx:106
+#: src/app/settings/_layout.tsx:104
 msgid "App Settings"
 msgstr "Налаштування застосунку"
 
@@ -431,7 +431,7 @@ msgstr "Заблокований допис"
 msgid "Blocked users"
 msgstr "Заблоковані користувачі"
 
-#: src/app/settings/_layout.tsx:94
+#: src/app/settings/_layout.tsx:92
 msgid "Blocked Users"
 msgstr "Заблоковані користувачі"
 
@@ -494,12 +494,12 @@ msgstr "Підписуючись, ви погоджуєтеся з нашими 
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: src/app/settings/_layout.tsx:70
+#: src/app/settings/_layout.tsx:68
 #: src/app/settings/account/index.tsx:45
 msgid "Change Handle"
 msgstr "Змінити псевдонім"
 
-#: src/app/settings/_layout.tsx:76
+#: src/app/settings/_layout.tsx:74
 #: src/app/settings/account/index.tsx:55
 msgid "Change Password"
 msgstr "Змінити пароль"
@@ -540,7 +540,7 @@ msgstr "Обрати з бібліотеки"
 msgid "Circle graph"
 msgstr "Круговий графік"
 
-#: src/app/images/[post].tsx:92
+#: src/app/images/[post].tsx:89
 msgid "Close image modal"
 msgstr "Закрити модальне зображення"
 
@@ -564,7 +564,7 @@ msgstr "Контактувати"
 msgid "Content filters"
 msgstr "Фільтри вмісту"
 
-#: src/app/settings/_layout.tsx:136
+#: src/app/settings/_layout.tsx:134
 msgid "Content Languages"
 msgstr "Мови вмісту"
 
@@ -637,7 +637,7 @@ msgstr "Не вдалося отримати стрічку зі спискам�
 msgid "Could not fetch mutes"
 msgstr "Не вдалося отримати список ігнорувань"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:286
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:282
 msgid "Could not fetch trending topics"
 msgstr "Не вдалося отримати популярні теми"
 
@@ -726,7 +726,7 @@ msgstr "Темна"
 msgid "Delete"
 msgstr "Видалити"
 
-#: src/app/settings/_layout.tsx:82
+#: src/app/settings/_layout.tsx:80
 #: src/app/settings/account/delete-account.tsx:208
 #: src/app/settings/account/index.tsx:60
 msgid "Delete Account"
@@ -932,7 +932,7 @@ msgstr "Отримати зв'язки"
 msgid "Find people to follow"
 msgstr "Знайти людей, щоб підписатися"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:393
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:389
 #: src/components/screens/profile/profile-info.tsx:409
 msgid "Follow"
 msgstr "Підписатися"
@@ -966,7 +966,7 @@ msgstr "Підписки"
 #. 'Following' - following a user
 #. 'Following' - following a user
 #. js-lingui-explicit-id
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:395
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:391
 #: src/components/lists/person-row.tsx:47
 #: src/components/screens/profile/profile-info.tsx:384
 #: src/lib/composer/suggestion-list.tsx:52
@@ -1001,11 +1001,11 @@ msgstr "Загальне"
 msgid "Get Graysky Pro for access to DeepL translations. Google Translate is used otherwise."
 msgstr "Отримати Graysky Pro для доступу до перекладів DeepL. Інакше буде використовуватись Google Translate."
 
-#: src/components/screens/waiting-room.tsx:102
+#: src/components/screens/waiting-room.tsx:91
 msgid "Get started"
 msgstr "З чого почати"
 
-#: src/components/screens/waiting-room.tsx:49
+#: src/components/screens/waiting-room.tsx:38
 msgid "Getting queue position..."
 msgstr "Отримання розташування у черзі..."
 
@@ -1058,7 +1058,7 @@ msgstr "Приховувати"
 msgid "Home feed preferences"
 msgstr "Налаштування домашньої стрічки"
 
-#: src/app/settings/_layout.tsx:112
+#: src/app/settings/_layout.tsx:110
 msgid "Home Feed Preferences"
 msgstr "Налаштування домашньої стрічки"
 
@@ -1106,7 +1106,7 @@ msgstr "Поточна тема: {current}"
 msgid "Joined {0}"
 msgstr "Дата приєднання: {0}"
 
-#: src/app/settings/_layout.tsx:124
+#: src/app/settings/_layout.tsx:122
 #: src/app/settings/index.tsx:58
 msgid "Languages"
 msgstr "Мови"
@@ -1184,7 +1184,7 @@ msgstr "Увійдіть знову"
 msgid "Log in"
 msgstr "Увійти"
 
-#: src/components/screens/waiting-room.tsx:106
+#: src/components/screens/waiting-room.tsx:95
 msgid "Log out"
 msgstr "Вийти"
 
@@ -1242,7 +1242,7 @@ msgstr "Оманливий обліковий запис"
 msgid "Missing alt text"
 msgstr "Відсутній alt текст"
 
-#: src/app/settings/_layout.tsx:88
+#: src/app/settings/_layout.tsx:86
 #: src/app/settings/index.tsx:48
 msgid "Moderation"
 msgstr "Модерація"
@@ -1292,7 +1292,7 @@ msgstr "Список ігнорованих"
 msgid "Muted users"
 msgstr "Ігноровані користувачі"
 
-#: src/app/settings/_layout.tsx:100
+#: src/app/settings/_layout.tsx:98
 msgid "Muted Users"
 msgstr "Ігноровані користувачі"
 
@@ -1356,7 +1356,7 @@ msgid "New Password"
 msgstr "Новий пароль"
 
 #: src/app/composer/_layout.tsx:74
-#: src/lib/quick-actions.ts:76
+#: src/lib/quick-actions.ts:53
 msgid "New Post"
 msgstr "Новий допис"
 
@@ -1468,7 +1468,7 @@ msgstr "Пароль успішно змінений!"
 msgid "Password must be at least 8 characters"
 msgstr "Пароль має містити щонайменше 8 символів"
 
-#: src/components/screens/waiting-room.tsx:85
+#: src/components/screens/waiting-room.tsx:74
 msgid "people ahead of you."
 msgstr "людей попереду вас."
 
@@ -1481,10 +1481,10 @@ msgid "People you follow"
 msgstr "Люди, на яких ви підписані"
 
 #: src/components/image-with-context-menu.tsx:156
-#: src/lib/composer/utils.tsx:501
-#: src/lib/composer/utils.tsx:511
-#: src/lib/composer/utils.tsx:530
-#: src/lib/composer/utils.tsx:538
+#: src/lib/composer/utils.tsx:497
+#: src/lib/composer/utils.tsx:507
+#: src/lib/composer/utils.tsx:526
+#: src/lib/composer/utils.tsx:534
 msgid "Permission required"
 msgstr "Необхідний дозвіл"
 
@@ -1500,14 +1500,14 @@ msgstr ""
 msgid "Please add descriptive alt text to all images before posting."
 msgstr "Будь ласка, додайте alt опис до всіх зображень перед публікацією."
 
-#: src/lib/composer/utils.tsx:531
-#: src/lib/composer/utils.tsx:539
+#: src/lib/composer/utils.tsx:527
+#: src/lib/composer/utils.tsx:535
 msgid "Please enable camera access in your settings"
 msgstr "Увімкніть доступ до фотогалереї у ваших налаштуваннях"
 
 #: src/components/image-with-context-menu.tsx:158
-#: src/lib/composer/utils.tsx:503
-#: src/lib/composer/utils.tsx:513
+#: src/lib/composer/utils.tsx:499
+#: src/lib/composer/utils.tsx:509
 msgid "Please enable photo gallery access in your settings"
 msgstr "Увімкніть доступ до фотогалереї у ваших налаштуваннях"
 
@@ -1564,7 +1564,7 @@ msgstr "Мови дописів"
 msgid "Post link copied to clipboard"
 msgstr "Текст допису скопійовано в буфер обміну"
 
-#: src/lib/composer/utils.tsx:340
+#: src/lib/composer/utils.tsx:336
 msgid "Post published!"
 msgstr "Допис опубліковано!"
 
@@ -1603,11 +1603,11 @@ msgstr "Основна стрічка"
 msgid "Primary language"
 msgstr "Основна мова"
 
-#: src/app/settings/_layout.tsx:130
+#: src/app/settings/_layout.tsx:128
 msgid "Primary Language"
 msgstr "Основна мова"
 
-#: src/app/settings/_layout.tsx:58
+#: src/app/settings/_layout.tsx:56
 msgid "Pro Settings"
 msgstr "Налаштування Pro"
 
@@ -1789,17 +1789,17 @@ msgid "Saved image to gallery"
 msgstr "Зображення збережено в галерею"
 
 #: src/app/(tabs)/_layout.tsx:186
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:87
-#: src/lib/quick-actions.ts:70
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:83
+#: src/lib/quick-actions.ts:47
 msgid "Search"
 msgstr "Пошук"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:182
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:178
 msgid "Search all users"
 msgstr "Пошук всіх користувачів"
 
 #: src/app/(tabs)/(feeds,search,notifications,self)/search/feeds.tsx:115
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:151
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:147
 #: src/app/discover.tsx:29
 msgid "Search feeds"
 msgstr "Пошук стрічок"
@@ -1838,7 +1838,7 @@ msgstr "Пошук людей"
 msgid "Search People"
 msgstr "Пошук людей"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:146
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:142
 #: src/app/(tabs)/(feeds,search,notifications,self)/search/posts.tsx:135
 msgid "Search posts"
 msgstr "Пошук дописів"
@@ -1847,11 +1847,11 @@ msgstr "Пошук дописів"
 msgid "Search Posts"
 msgstr "Пошук дописів"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:157
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:153
 msgid "Search users"
 msgstr "Пошук користувачів"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:62
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:58
 msgid "Search users, posts, feeds"
 msgstr "Пошук користувачів, дописів, стрічок"
 
@@ -1887,9 +1887,9 @@ msgstr "Надіслати підтвердження електронною п�
 msgid "Send reset email"
 msgstr "Надіслати електронний лист для скидання"
 
-#: src/app/settings/_layout.tsx:44
+#: src/app/settings/_layout.tsx:42
 #: src/components/drawer/drawer-content.tsx:214
-#: src/lib/quick-actions.ts:82
+#: src/lib/quick-actions.ts:59
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -2069,7 +2069,7 @@ msgstr "Підписатися на {0}"
 msgid "Subscribe to list"
 msgstr "Підписатись на список"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:293
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:289
 msgid "Suggested follows"
 msgstr "Рекомендовані підписки"
 
@@ -2182,7 +2182,7 @@ msgstr "Для початку додайте деякі стрічки на го
 msgid "Toggle favourite status"
 msgstr "Перемкнути статус улюбленого"
 
-#: src/lib/composer/utils.tsx:393
+#: src/lib/composer/utils.tsx:389
 msgid "Too many images selected"
 msgstr "Вибрано забагато зображень"
 
@@ -2215,11 +2215,11 @@ msgstr "Перекласти допис"
 msgid "Translate posts using DeepL"
 msgstr "Перекладати дописи за допомогою DeepL"
 
-#: src/components/translation.tsx:144
+#: src/components/translation.tsx:146
 msgid "Translated by DeepL"
 msgstr "Перекладено DeepL"
 
-#: src/components/translation.tsx:133
+#: src/components/translation.tsx:135
 msgid "Translated by Google"
 msgstr "Перекладено Google"
 
@@ -2232,7 +2232,7 @@ msgstr "Сервіс перекладу"
 msgid "Translations are now powered by DeepL"
 msgstr "Переклади відтепер працюють на DeepL"
 
-#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:249
+#: src/app/(tabs)/(feeds,search,notifications,self)/search/index.tsx:245
 msgid "Trending topics"
 msgstr "Популярні теми"
 
@@ -2392,7 +2392,7 @@ msgstr "Попередження: Видалення облікового зап
 msgid "Welcome to Bluesky!"
 msgstr "Ласкаво просимо до Bluesky!"
 
-#: src/components/screens/waiting-room.tsx:70
+#: src/components/screens/waiting-room.tsx:59
 msgid "Welcome to Bluesky! We're excited to have you."
 msgstr "Ласкаво просимо до Bluesky! Ми раді, що ви з вами."
 
@@ -2437,7 +2437,7 @@ msgstr "Ви увійшли як @{0}"
 msgid "You can now change the accent colour"
 msgstr "Тепер ви можете змінити колір акценту"
 
-#: src/lib/composer/utils.tsx:395
+#: src/lib/composer/utils.tsx:391
 msgid "You can only attach up to {MAX_IMAGES} images, additional images will be ignored"
 msgstr "Ви можете прикріпити лише {MAX_IMAGES} зображень, додаткові зображення будуть проігноровані"
 
@@ -2485,11 +2485,11 @@ msgstr "Ви можете використовувати App Password заміс
 msgid "You will no longer see posts from @{handle}"
 msgstr "Ви більше не будете бачити дописів від @{handle}"
 
-#: src/components/screens/waiting-room.tsx:76
+#: src/components/screens/waiting-room.tsx:65
 msgid "You're in the queue to join Bluesky!"
 msgstr "Ви у черзі на приєднання до Bluesky!"
 
-#: src/components/screens/waiting-room.tsx:64
+#: src/components/screens/waiting-room.tsx:53
 msgid "You're in!"
 msgstr "Ви увійшли!"
 

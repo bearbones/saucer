@@ -12,3 +12,5 @@ expo.iml
 google-services.json
 
 eas-workingdir
+
+src/i18n/locales/*/messages.js

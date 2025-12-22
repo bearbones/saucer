@@ -6,6 +6,7 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "format:fix": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "lint": "eslint",
     "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",

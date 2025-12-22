@@ -5,7 +5,7 @@ import { type AppBskyFeedGetFeedGenerator } from "@atproto/api";
 import { Trans } from "@lingui/macro";
 import { useTheme } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
-import { UseQueryResult } from "@tanstack/react-query";
+import { type UseQueryResult } from "@tanstack/react-query";
 import { RssIcon, SearchIcon } from "lucide-react-native";
 
 import { useTabPressScrollRef } from "~/lib/hooks";

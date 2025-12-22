@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ActivityIndicator, Platform, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { Stack } from "expo-router";
 import { Trans } from "@lingui/macro";
 import { jwtDecode } from "jwt-decode";

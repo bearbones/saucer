@@ -18,7 +18,7 @@ import { Text } from "~/components/themed/text";
 import { TransparentHeaderUntilScrolled } from "~/components/transparent-header";
 import { useLinkPress } from "~/lib/hooks/link-press";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const appIcon = require("../../../assets/icon.png") as ImageSource;
 
 export default function AboutPage() {

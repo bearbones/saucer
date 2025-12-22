@@ -112,9 +112,9 @@ const EXAMPLE_POST =
   "at://did:plc:vwzwgnygau7ed7b7wt5ux7y2/app.bsky.feed.post/3karfx5vrvv23";
 
 export default function Homepage() {
-    const thread = await agent.app.bsky.feed.getPostThread({
+  const thread = await agent.app.bsky.feed.getPostThread({
     uri: EXAMPLE_POST,
-  })
+  });
 
   return (
     <div className="container mx-auto">

@@ -1,6 +1,5 @@
+import { type JSX } from "react";
 import { type ViewProps } from "react-native";
-
-import type { JSX } from "react";
 
 export interface ContexMenuItem {
   key: string;
@@ -15,4 +14,4 @@ interface Props extends ViewProps {
   menu: ContexMenuItem[];
 }
 
-export const ContextMenuButton = (props: Props) => {};
+export const ContextMenuButton = (_props: Props) => {};

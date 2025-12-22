@@ -34,6 +34,7 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check \"**/*.{js,json}\"",
+    "format:fix": "prettier --write \"**/*.{js,json}\"",
     "typecheck": "tsc --noEmit"
   }
 }

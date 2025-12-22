@@ -99,8 +99,8 @@ const FeedSearch = ({ search }: Props) => {
 export default function FeedSearchScreen() {
   const { _ } = useLingui();
 
-  const { q } = useLocalSearchParams() as { q: string };
-  const query = decodeURIComponent(q || "");
+  const { q } = useLocalSearchParams();
+  const query = decodeURIComponent(typeof q === "string" ? q : "");
   const [search, setSearch] = useState(query);
 
   const ref = useRef<SearchBarCommands>(null!);

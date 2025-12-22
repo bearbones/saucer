@@ -138,7 +138,7 @@ export default function AppLayout() {
           backgroundColor: theme.colors.card,
         }}
         swipeEdgeWidth={dimensions.width}
-        // @ts-expect-error
+        // @ts-expect-error types are overly specific
         swipeEnabled={segments.length === 3}
       >
         <Tabs

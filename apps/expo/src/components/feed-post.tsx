@@ -63,8 +63,8 @@ const FeedPostInner = ({
 }: Props) => {
   const showWarning = Boolean(
     !!item.post.author.viewer?.blocking ||
-      !!item.post.author.viewer?.blocked ||
-      !!filter,
+    !!item.post.author.viewer?.blocked ||
+    !!filter,
   );
   const { _, i18n } = useLingui();
   const [hidden, setHidden] = useState(showWarning);

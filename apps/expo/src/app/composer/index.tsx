@@ -4,10 +4,10 @@ import {
   Alert,
   Keyboard,
   Platform,
-  TextInput,
   TouchableHighlight,
   TouchableOpacity,
   View,
+  type TextInput,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import Animated, {

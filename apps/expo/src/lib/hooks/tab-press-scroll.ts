@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
+ 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useCallback, useEffect, useRef } from "react";
 import {
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "expo-router";
-import { FlashListRef } from "@shopify/flash-list";
+import { type FlashListRef } from "@shopify/flash-list";
 
 interface Options {
   largeHeader?: boolean;

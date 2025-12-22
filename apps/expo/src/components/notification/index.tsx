@@ -1,6 +1,6 @@
 import { TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { Link, useRouter } from "expo-router";
-import { msg, Plural, Trans } from "@lingui/macro";
+import { msg, Trans } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useTheme } from "@react-navigation/native";
 import { HeartIcon, RepeatIcon, UserPlusIcon } from "lucide-react-native";
@@ -35,7 +35,7 @@ export const Notification = ({
   const { _ } = useLingui();
 
   let href: string | undefined;
-  if (subject && subject.startsWith("at://")) {
+  if (subject?.startsWith("at://")) {
     const [did, _, id] = subject.slice("at://".length).split("/");
     href = path(`/profile/${did}/post/${id}`);
   }
@@ -115,7 +115,7 @@ export const Notification = ({
           onPress={() =>
             actors.length === 1
               ? router.push(path(`/profile/${actors[0]!.did}`))
-              : openFollowers(agent.session!.did, actors.length)
+              : openFollowers(agent.assertDid, actors.length)
           }
         >
           <NotificationItem
@@ -126,7 +126,7 @@ export const Notification = ({
               actors={actors}
               action={_(msg`started following you`)}
               indexedAt={indexedAt}
-              showAll={() => openFollowers(agent.session!.did, actors.length)}
+              showAll={() => openFollowers(agent.assertDid, actors.length)}
             />
           </NotificationItem>
         </TouchableHighlight>

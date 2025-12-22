@@ -127,8 +127,10 @@ export const Translation = ({ text, uri, forceShow }: Props) => {
               <Image
                 source={
                   theme.dark
-                    ? require("../../assets/translated_by-white.png")
-                    : require("../../assets/translated_by.png")
+                    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
+                      require("../../assets/translated_by-white.png")
+                    : // eslint-disable-next-line @typescript-eslint/no-require-imports
+                      require("../../assets/translated_by.png")
                 }
                 alt={_(msg`Translated by Google`)}
                 style={{ aspectRatio: 7.6 }}
