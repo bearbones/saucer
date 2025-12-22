@@ -18,6 +18,7 @@ import {
   useOpenDrawerAvatarItem,
 } from "~/components/open-drawer-avatar";
 import { QueryWithoutData } from "~/components/query-without-data";
+import { usePlainBackgroundColor } from "~/components/themed/background";
 import { useAgent } from "~/lib/agent";
 import { useTabPressScrollRef } from "~/lib/hooks";
 import { useHaptics } from "~/lib/hooks/preferences";
@@ -289,6 +290,7 @@ export default function NotificationPage() {
   const headerLeft = useCallback(() => <OpenDrawerAvatar />, []);
   const avatarItem = useOpenDrawerAvatarItem();
   const headerItemsLeft = () => [avatarItem];
+  const backgroundColor = usePlainBackgroundColor();
 
   return (
     <>
@@ -299,6 +301,7 @@ export default function NotificationPage() {
           unstable_headerLeftItems: headerItemsLeft,
           headerLargeTitle: isIOS26,
           headerTransparent: isIOS26,
+          contentStyle: { backgroundColor },
         }}
       />
       <Notifications />

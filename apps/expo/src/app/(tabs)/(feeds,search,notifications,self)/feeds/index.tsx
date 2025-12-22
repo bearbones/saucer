@@ -28,6 +28,7 @@ import {
   NoFeeds,
   SectionHeader,
 } from "~/components/screens/feeds-screen-elements";
+import { usePlainBackgroundColor } from "~/components/themed/background";
 import { Text } from "~/components/themed/text";
 import { useSavedFeeds } from "~/lib/hooks";
 import { useReorderFeeds, useToggleFeedPref } from "~/lib/hooks/feeds";
@@ -244,6 +245,7 @@ export default function Page() {
   const headerLeft = useCallback(() => <OpenDrawerAvatar />, []);
   const avatarItem = useOpenDrawerAvatarItem();
   const headerItemsLeft = () => [avatarItem];
+  const backgroundColor = usePlainBackgroundColor();
 
   if (homepage === "skyline") {
     return (
@@ -256,6 +258,7 @@ export default function Page() {
             headerLeft,
             unstable_headerLeftItems: headerItemsLeft,
             headerRight: () => null,
+            contentStyle: { backgroundColor },
           }}
         />
         <FeedScreen feed={defaultFeed} />

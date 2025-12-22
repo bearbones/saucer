@@ -26,6 +26,7 @@ import { Avatar } from "~/components/avatar";
 import { FeedPost } from "~/components/feed-post";
 import { PrimaryPost } from "~/components/primary-post";
 import { QueryWithoutData } from "~/components/query-without-data";
+import { usePlainBackgroundColor } from "~/components/themed/background";
 import { Text as ThemedText } from "~/components/themed/text";
 import { useAgent } from "~/lib/agent";
 import { useComposer } from "~/lib/composer/utils";
@@ -345,6 +346,7 @@ const PostThread = ({ contentFilter }: Props) => {
 export default function PostPage() {
   const { preferences, contentFilter } = useContentFilter();
   const { _ } = useLingui();
+  const backgroundColor = usePlainBackgroundColor();
 
   if (preferences.data) {
     return (
@@ -353,6 +355,7 @@ export default function PostPage() {
           options={{
             headerTitle: _(msg`Post`),
             ...(isIOS26 && { headerTransparent: true }),
+            contentStyle: { backgroundColor },
           }}
         />
         <PostThread contentFilter={contentFilter} />
@@ -365,6 +368,7 @@ export default function PostPage() {
       options={{
         headerTitle: _(msg`Post`),
         ...(isIOS26 && { headerTransparent: true }),
+        contentStyle: { backgroundColor },
       }}
     />
   );

@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 
 import { FeedScreen } from "~/components/screens/feed-screen";
+import { usePlainBackgroundColor } from "~/components/themed/background";
 import { useAbsolutePath } from "~/lib/absolute-path-context";
 import { useFeedInfo } from "~/lib/hooks/feeds";
 import { isIOS26 } from "~/lib/utils/version";
@@ -17,6 +18,7 @@ export default function FeedsPage() {
   const feed = `at://${author}/app.bsky.feed.generator/${generator}`;
 
   const info = useFeedInfo(feed);
+  const backgroundColor = usePlainBackgroundColor();
 
   return (
     <>
@@ -25,6 +27,7 @@ export default function FeedsPage() {
           isIOS26
             ? {
                 headerTransparent: true,
+                contentStyle: { backgroundColor },
                 unstable_headerRightItems: () => [
                   {
                     type: "custom",
