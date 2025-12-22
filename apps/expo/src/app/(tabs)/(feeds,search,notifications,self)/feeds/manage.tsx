@@ -9,6 +9,7 @@ import { PlusIcon } from "lucide-react-native";
 import { Text } from "~/components/themed/text";
 import { useHaptics } from "~/lib/hooks/preferences";
 import { cx } from "~/lib/utils/cx";
+import { isIOS26 } from "~/lib/utils/version";
 import { FeedsPage } from ".";
 
 export default function Page() {
@@ -22,8 +23,9 @@ export default function Page() {
       <Stack.Screen
         options={{
           title: _(msg`Feeds`),
+          headerTransparent: isIOS26,
           headerRight: () => (
-            <View className="flex-row items-center">
+            <View className="flex-row items-center px-3">
               <TouchableOpacity
                 onPress={() => {
                   haptics.selection();

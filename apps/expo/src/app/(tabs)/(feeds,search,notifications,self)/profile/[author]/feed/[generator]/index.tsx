@@ -1,11 +1,11 @@
-import { Fragment } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableHighlight, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 
 import { FeedScreen } from "~/components/screens/feed-screen";
 import { useAbsolutePath } from "~/lib/absolute-path-context";
 import { useFeedInfo } from "~/lib/hooks/feeds";
+import { isIOS26 } from "~/lib/utils/version";
 
 export default function FeedsPage() {
   const path = useAbsolutePath();
@@ -21,22 +21,50 @@ export default function FeedsPage() {
   return (
     <>
       <Stack.Screen
-        options={{
-          headerRight: () => (
-            <Link
-              asChild
-              href={path(`/profile/${author}/feed/${generator}/details`)}
-            >
-              <TouchableOpacity>
-                <Image
-                  source={{ uri: info.data?.view.avatar }}
-                  className="h-6 w-6 rounded bg-blue-500"
-                  alt={info.data?.view.displayName}
-                />
-              </TouchableOpacity>
-            </Link>
-          ),
-        }}
+        options={
+          isIOS26
+            ? {
+                headerTransparent: true,
+                unstable_headerRightItems: () => [
+                  {
+                    type: "custom",
+                    hidesSharedBackground: true,
+                    element: (
+                      <Link
+                        asChild
+                        href={path(
+                          `/profile/${author}/feed/${generator}/details`,
+                        )}
+                      >
+                        <TouchableHighlight>
+                          <Image
+                            source={{ uri: info.data?.view.avatar }}
+                            className="h-8 w-8 rounded bg-blue-500"
+                            alt={info.data?.view.displayName}
+                          />
+                        </TouchableHighlight>
+                      </Link>
+                    ),
+                  },
+                ],
+              }
+            : {
+                headerRight: () => (
+                  <Link
+                    asChild
+                    href={path(`/profile/${author}/feed/${generator}/details`)}
+                  >
+                    <TouchableOpacity>
+                      <Image
+                        source={{ uri: info.data?.view.avatar }}
+                        className="h-6 w-6 rounded bg-blue-500"
+                        alt={info.data?.view.displayName}
+                      />
+                    </TouchableOpacity>
+                  </Link>
+                ),
+              }
+        }
       />
       <FeedScreen feed={feed} />
     </>

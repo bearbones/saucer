@@ -1,4 +1,4 @@
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableHighlight, TouchableOpacity } from "react-native";
 import { msg } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 
@@ -21,3 +21,20 @@ export const OpenDrawerAvatar = () => {
     </TouchableOpacity>
   );
 };
+
+export function useOpenDrawerAvatarItem() {
+  const openDrawer = useDrawer();
+  const { _ } = useLingui();
+  return {
+    type: "custom",
+    hidesSharedBackground: true,
+    element: (
+      <TouchableHighlight
+        onPress={() => openDrawer()}
+        accessibilityHint={_(msg`Open drawer menu`)}
+      >
+        <Avatar self size="medium" />
+      </TouchableHighlight>
+    ),
+  } as const;
+}

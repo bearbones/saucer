@@ -39,6 +39,7 @@ import {
 } from "~/lib/hooks/feeds";
 import { useHaptics } from "~/lib/hooks/preferences";
 import { cx } from "~/lib/utils/cx";
+import { isIOS26 } from "~/lib/utils/version";
 
 export default function FeedDetails() {
   const { author, generator } = useLocalSearchParams<{
@@ -56,14 +57,18 @@ export default function FeedDetails() {
   if (info.data) {
     return (
       <>
-        <Stack.Screen options={{ title }} />
+        <Stack.Screen
+          options={{ title, ...(isIOS26 && { headerTransparent: true }) }}
+        />
         <FeedInfo feed={feed} info={info.data} />
       </>
     );
   } else {
     return (
       <>
-        <Stack.Screen options={{ title }} />
+        <Stack.Screen
+          options={{ title, ...(isIOS26 && { headerTransparent: true }) }}
+        />
         <QueryWithoutData query={info} />
       </>
     );
@@ -127,7 +132,7 @@ const FeedInfo = ({
     const isPinned = savedFeeds.data.pinned.includes(feed);
 
     return (
-      <ScrollView className="flex-1">
+      <ScrollView className="flex-1" contentInsetAdjustmentBehavior="automatic">
         <View
           className={cx(
             "w-full border-neutral-300 p-4",

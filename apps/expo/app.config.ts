@@ -71,6 +71,7 @@ const defineConfig = (_: ConfigContext): ExpoConfig => ({
   experiments: {
     tsconfigPaths: true,
     typedRoutes: false, // too much string interpolation :(
+    reactCompiler: true,
   },
   plugins: [
     "./plugins/withStaticPods.js",

@@ -17,7 +17,10 @@ import {
 
 import { DraggableFeedRow } from "~/components/feed-row";
 import { ItemSeparator } from "~/components/item-separator";
-import { OpenDrawerAvatar } from "~/components/open-drawer-avatar";
+import {
+  OpenDrawerAvatar,
+  useOpenDrawerAvatarItem,
+} from "~/components/open-drawer-avatar";
 import { QueryWithoutData } from "~/components/query-without-data";
 import { FeedScreen } from "~/components/screens/feed-screen";
 import {
@@ -239,6 +242,8 @@ export default function Page() {
   const { _ } = useLingui();
 
   const headerLeft = useCallback(() => <OpenDrawerAvatar />, []);
+  const avatarItem = useOpenDrawerAvatarItem();
+  const headerItemsLeft = () => [avatarItem];
 
   if (homepage === "skyline") {
     return (
@@ -247,7 +252,9 @@ export default function Page() {
           options={{
             title: _(msg`Skyline`),
             headerLargeTitle: false,
+            headerTransparent: isIOS26,
             headerLeft,
+            unstable_headerLeftItems: headerItemsLeft,
             headerRight: () => null,
           }}
         />
@@ -264,6 +271,7 @@ export default function Page() {
           headerLargeTitle: true,
           headerTransparent: isIOS26,
           headerLeft,
+          unstable_headerLeftItems: headerItemsLeft,
           headerRight: () => (
             <View className="flex-row items-center">
               <TouchableOpacity

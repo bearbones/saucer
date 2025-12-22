@@ -13,7 +13,10 @@ import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 
 import { ListFooterComponent } from "~/components/list-footer";
 import { Notification } from "~/components/notification";
-import { OpenDrawerAvatar } from "~/components/open-drawer-avatar";
+import {
+  OpenDrawerAvatar,
+  useOpenDrawerAvatarItem,
+} from "~/components/open-drawer-avatar";
 import { QueryWithoutData } from "~/components/query-without-data";
 import { useAgent } from "~/lib/agent";
 import { useTabPressScrollRef } from "~/lib/hooks";
@@ -243,8 +246,6 @@ function Notifications() {
             headerRight: nonScrollRefreshing
               ? () => <ActivityIndicator size="small" />
               : undefined,
-            headerLargeTitle: isIOS26,
-            headerTransparent: isIOS26,
           }}
         />
         <FlashList<NotificationGroup>
@@ -286,6 +287,8 @@ function Notifications() {
 export default function NotificationPage() {
   const { _ } = useLingui();
   const headerLeft = useCallback(() => <OpenDrawerAvatar />, []);
+  const avatarItem = useOpenDrawerAvatarItem();
+  const headerItemsLeft = () => [avatarItem];
 
   return (
     <>
@@ -293,6 +296,9 @@ export default function NotificationPage() {
         options={{
           title: _(msg`Notifications`),
           headerLeft,
+          unstable_headerLeftItems: headerItemsLeft,
+          headerLargeTitle: isIOS26,
+          headerTransparent: isIOS26,
         }}
       />
       <Notifications />

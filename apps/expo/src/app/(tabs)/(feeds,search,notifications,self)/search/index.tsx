@@ -31,7 +31,10 @@ import { GroupedList } from "~/components/grouped-list";
 import { ItemSeparator } from "~/components/item-separator";
 import { ListFooterComponent } from "~/components/list-footer";
 import { PersonRow } from "~/components/lists/person-row";
-import { OpenDrawerAvatar } from "~/components/open-drawer-avatar";
+import {
+  OpenDrawerAvatar,
+  useOpenDrawerAvatarItem,
+} from "~/components/open-drawer-avatar";
 import { QueryWithoutData } from "~/components/query-without-data";
 import { RichText } from "~/components/rich-text";
 import { Text } from "~/components/themed/text";
@@ -70,6 +73,9 @@ export default function SearchPage() {
     [],
   );
 
+  const avatarItem = useOpenDrawerAvatarItem();
+  const headerItemsLeft = () => [avatarItem];
+
   useTabPress(() => {
     if (ref.current) {
       ref.current.focus();
@@ -88,6 +94,7 @@ export default function SearchPage() {
             backgroundColor: isIOS26 ? "transparent" : theme.colors.background,
           },
           headerLeft,
+          unstable_headerLeftItems: headerItemsLeft,
           headerSearchBarOptions,
         }}
       />
