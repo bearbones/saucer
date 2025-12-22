@@ -87,7 +87,7 @@ export const appPreferencesStore = create<AppPreferences>()(
     storage: createJSONStorage(() => ({
       setItem: (name, value) => store.set(name, value),
       getItem: (name) => store.getString(name) ?? null,
-      removeItem: (name) => store.delete(name),
+      removeItem: (name) => store.remove(name),
     })),
   }),
 );
@@ -177,7 +177,7 @@ export const useThemeSetup = () => {
 function mirgrateFromOldAppPreferences(store: MMKV) {
   const oldPrefsStr = store.getString("app-prefs");
   if (oldPrefsStr) {
-    store.delete("app-prefs");
+    store.remove("app-prefs");
     try {
       return appPrefsSchema.parse(JSON.parse(oldPrefsStr));
     } catch {
