@@ -1,25 +1,15 @@
-/** @type {import('eslint').Linter.Config} */
-const config = {
-  extends: [
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
-  ],
-  rules: {
-    "react/prop-types": "off",
-    "jsx-a11y/no-autofocus": "off",
+import pluginReact from "eslint-plugin-react";
+import reactCompiler from "eslint-plugin-react-compiler";
+
+export default [
+  {
+    ...pluginReact.configs.flat.recommended,
+    settings: { react: { version: "detect" } },
   },
-  globals: {
-    React: "writable",
-  },
-  settings: {
-    react: {
-      version: "detect",
+  reactCompiler.configs.recommended,
+  {
+    rules: {
+      "react-compiler/react-compiler": "error",
     },
   },
-  env: {
-    browser: true,
-  },
-};
-
-module.exports = config;
+];
