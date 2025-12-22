@@ -12,6 +12,7 @@ import { useTabPressScrollRef } from "~/lib/hooks";
 import { useFeedInfo, useTimeline, type TimelineItem } from "~/lib/hooks/feeds";
 import { useHaptics } from "~/lib/hooks/preferences";
 import { useUserRefresh } from "~/lib/utils/query";
+import { isIOS26 } from "~/lib/utils/version";
 import { FeedPost } from "../feed-post";
 import { FeedsButton } from "../feeds-button";
 import { ListFooterComponent } from "../list-footer";
@@ -42,7 +43,7 @@ export const FeedScreen = ({ feed }: Props) => {
         await refetch();
       };
     }, [haptics, refetch]),
-    { setScrollDir },
+    { setScrollDir, transparentHeader: isIOS26 },
   );
 
   if (!info.data)
@@ -69,6 +70,7 @@ export const FeedScreen = ({ feed }: Props) => {
           onScroll={onScroll}
           data={data}
           contentInsetAdjustmentBehavior="automatic"
+          scrollToOverflowEnabled
           renderItem={({ item: { hasReply, item, filter }, index }) => (
             <FeedPost
               filter={filter}

@@ -1,4 +1,3 @@
- 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useCallback, useEffect, useRef } from "react";
 import {
@@ -9,20 +8,23 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "expo-router";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { type FlashListRef } from "@shopify/flash-list";
 
 interface Options {
   largeHeader?: boolean;
   setScrollDir?: (dir: number) => void;
+  transparentHeader?: boolean;
 }
 
 export const useTabPressScroll = <T>(
   ref: React.RefObject<FlashListRef<T> | FlatList<T> | null>,
   callback: () => unknown = () => {},
-  { largeHeader, setScrollDir }: Options = {},
+  { largeHeader, setScrollDir, transparentHeader }: Options = {},
 ) => {
   const navigation = useNavigation();
   const atTopRef = useRef(true);
+  const headerHeight = useHeaderHeight();
 
   const prev = useRef(0);
 
@@ -33,7 +35,13 @@ export const useTabPressScroll = <T>(
   const statusBarHeight = top > 50 ? top - 5 : top;
 
   const targetOffset =
-    largeHeader && Platform.OS === "ios" ? (statusBarHeight + 96) * -1 : 0;
+    Platform.OS === "ios"
+      ? largeHeader
+        ? (statusBarHeight + 96) * -1
+        : transparentHeader
+          ? headerHeight * -1
+          : 0
+      : 0;
 
   useEffect(() => {
     // @ts-expect-error doesn't know what kind of navigator it is

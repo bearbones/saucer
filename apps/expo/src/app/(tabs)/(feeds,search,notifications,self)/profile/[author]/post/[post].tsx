@@ -241,7 +241,9 @@ const PostThread = ({ contentFilter }: Props) => {
     },
   });
 
-  const onScroll = useTabPressScroll<Posts>(ref);
+  const onScroll = useTabPressScroll<Posts>(ref, undefined, {
+    transparentHeader: isIOS26,
+  });
 
   if (thread.data) {
     const posts = thread.data.posts;
@@ -257,6 +259,7 @@ const PostThread = ({ contentFilter }: Props) => {
             isIOS26 ? { viewOffset: headerHeight } : undefined
           }
           contentInsetAdjustmentBehavior="automatic"
+          scrollToOverflowEnabled
           ListFooterComponent={
             thread.isFetching ? (
               <View className="w-full items-center py-4">
