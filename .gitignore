@@ -46,6 +46,9 @@ yarn-error.log*
 # eslint cache
 .cache/
 
+# lingui compiled messages
+apps/expo/src/i18n/locales/*/messages.js
+
 *.ipa
 *.apk
 *.apk.idsig
