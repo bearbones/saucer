@@ -26,7 +26,7 @@ export interface AuthContextValue {
     password: string,
     authFactorToken?: string,
   ) => Promise<void>;
-  resumeSession: (session: AtpSessionData) => Promise<void>;
+  resumeSession: (session: AtpSessionData, pdsUrl?: string) => Promise<void>;
   logout: () => void;
 }
 

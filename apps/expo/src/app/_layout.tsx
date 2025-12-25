@@ -39,6 +39,7 @@ import { useQuickAction, useSetupQuickActions } from "~/lib/quick-actions";
 import { useThemeSetup } from "~/lib/storage/app-preferences";
 import { store } from "~/lib/storage/storage";
 import { TRPCProvider } from "~/lib/utils/api";
+import { resolvePdsFromDid, resolvePdsUrl } from "~/lib/utils/resolve-pds";
 import { isIOS26 } from "~/lib/utils/version";
 
 const routingInstrumentation = Sentry.reactNavigationIntegration();
@@ -82,12 +83,15 @@ const App = () => {
   const { _ } = useLingui();
   const tRef = useRef(_);
   tRef.current = _;
+  const routerRef = useRef(router);
+  routerRef.current = router;
   const resumingRef = useRef(false);
 
   // Save session to storage and update saved sessions list
   const saveSessionToStorage = useCallback(
-    (sess: AtpSessionData, currentAgent: AtpAgent) => {
-      store.set("session", JSON.stringify(sess));
+    (sess: AtpSessionData, pdsUrl: string, currentAgent: AtpAgent) => {
+      const storedSession: StoredSession = { session: sess, pdsUrl };
+      store.set("session", JSON.stringify(storedSession));
       // Update saved sessions list with profile info
       void currentAgent.getProfile({ actor: sess.did }).then((res) => {
         if (res.success) {
@@ -98,6 +102,7 @@ const App = () => {
             handle: res.data.handle,
             avatar: res.data.avatar,
             displayName: res.data.displayName,
+            pdsUrl,
             signedOut: false,
           };
           if (sessions) {
@@ -116,46 +121,69 @@ const App = () => {
     [],
   );
 
-  // Create a new agent with persistSession callback
-  const createAgent = useCallback(() => {
-    const newAgent = new AtpAgent({
-      service: "https://bsky.social",
-      persistSession(evt, sess) {
-        if (evt === "create" || evt === "update") {
-          if (sess) {
-            saveSessionToStorage(sess, newAgent);
-          }
-        } else if (evt === "expired") {
-          store.remove("session");
-          showToastable({
-            message: tRef.current(
-              msg`Sorry! Your session expired. Please log in again.`,
-            ),
-          });
-          setAgent(null);
-        }
-      },
+  // Helper to handle session expiry
+  const handleSessionExpired = useCallback(() => {
+    store.remove("session");
+    showToastable({
+      message: tRef.current(
+        msg`Sorry! Your session expired. Please log in again.`,
+      ),
     });
-    return newAgent;
-  }, [saveSessionToStorage]);
+    setAgent(null);
+    // Dismiss any modals and go to landing
+    if (routerRef.current.canDismiss()) {
+      routerRef.current.dismissAll();
+    }
+    routerRef.current.replace("/");
+  }, []);
 
   // Auth functions
   const login = useCallback(
     async (identifier: string, password: string, authFactorToken?: string) => {
-      const newAgent = createAgent();
+      // Resolve the PDS URL from the handle
+      const pdsUrl = await resolvePdsUrl(identifier);
+
+      const newAgent = new AtpAgent({
+        service: pdsUrl,
+        persistSession(evt, sess) {
+          if (evt === "create" || evt === "update") {
+            if (sess) {
+              saveSessionToStorage(sess, pdsUrl, newAgent);
+            }
+          } else if (evt === "expired") {
+            handleSessionExpired();
+          }
+        },
+      });
+
       await newAgent.login({ identifier, password, authFactorToken });
       setAgent(newAgent);
     },
-    [createAgent],
+    [saveSessionToStorage, handleSessionExpired],
   );
 
   const resumeSession = useCallback(
-    async (session: AtpSessionData) => {
-      const newAgent = createAgent();
+    async (session: AtpSessionData, pdsUrl?: string) => {
+      // Use provided PDS URL or resolve from DID as fallback
+      const resolvedPdsUrl = pdsUrl ?? (await resolvePdsFromDid(session.did));
+
+      const newAgent = new AtpAgent({
+        service: resolvedPdsUrl,
+        persistSession(evt, sess) {
+          if (evt === "create" || evt === "update") {
+            if (sess) {
+              saveSessionToStorage(sess, resolvedPdsUrl, newAgent);
+            }
+          } else if (evt === "expired") {
+            handleSessionExpired();
+          }
+        },
+      });
+
       await newAgent.resumeSession(session);
       setAgent(newAgent);
     },
-    [createAgent],
+    [saveSessionToStorage, handleSessionExpired],
   );
 
   const logout = useCallback(() => {
@@ -174,7 +202,12 @@ const App = () => {
     store.remove("session");
     queryClient.clear();
     setAgent(null);
-  }, [agent?.session?.did, queryClient]);
+    // Dismiss any modals and go to landing
+    if (router.canDismiss()) {
+      router.dismissAll();
+    }
+    router.replace("/");
+  }, [agent?.session?.did, queryClient, router]);
 
   const authValue = useMemo<AuthContextValue>(
     () => ({ login, resumeSession, logout }),
@@ -186,9 +219,9 @@ const App = () => {
     if (resumingRef.current) return;
     resumingRef.current = true;
 
-    const savedSession = getSession();
-    if (savedSession) {
-      resumeSession(savedSession)
+    const stored = getSession();
+    if (stored) {
+      resumeSession(stored.session, stored.pdsUrl)
         .then(() => {
           router.replace("/(feeds)/feeds");
         })
@@ -432,11 +465,20 @@ const App = () => {
   );
 };
 
-const getSession = () => {
+interface StoredSession {
+  session: AtpSessionData;
+  pdsUrl: string;
+}
+
+const getSession = (): StoredSession | null => {
   const raw = store.getString("session");
   if (!raw) return null;
-  const session = JSON.parse(raw) as AtpSessionData;
-  return session;
+  const parsed = JSON.parse(raw) as StoredSession | AtpSessionData;
+  // Handle legacy format (just AtpSessionData without pdsUrl)
+  if ("did" in parsed && !("session" in parsed)) {
+    return { session: parsed, pdsUrl: "https://bsky.social" };
+  }
+  return parsed as StoredSession;
 };
 
 function RootLayout() {

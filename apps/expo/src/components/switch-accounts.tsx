@@ -29,6 +29,7 @@ export interface SavedSession {
   handle: string;
   did: string;
   session: AtpSessionData;
+  pdsUrl?: string;
   signedOut?: boolean;
 }
 interface Props {
@@ -54,12 +55,14 @@ export function SwitchAccounts({
 
   const resume = useMutation({
     mutationKey: ["switch-accounts"],
-    mutationFn: async (session: AtpSessionData) => {
+    mutationFn: async (account: SavedSession) => {
+      // Clear all cached data from the previous account
+      queryClient.clear();
       // Creates a fresh agent for the new session
-      await resumeSession(session);
-      return session;
+      await resumeSession(account.session, account.pdsUrl);
+      return account.session;
     },
-    onError: (err, session) => {
+    onError: (err, account) => {
       Alert.alert(
         _(msg`Could not log you in`),
         err instanceof Error ? err.message : _(msg`Unknown error`),
@@ -70,7 +73,7 @@ export function SwitchAccounts({
         message: err instanceof Error ? err.message : _(msg`Unknown error`),
         status: "warning",
       });
-      router.push(`/sign-in?handle=${session.handle}`);
+      router.push(`/sign-in?handle=${account.handle}`);
     },
     onSuccess: (session) => {
       showToastable({
@@ -78,7 +81,6 @@ export function SwitchAccounts({
         message: _(msg`You are now logged in as @${session.handle}`),
         status: "success",
       });
-      void queryClient.resetQueries();
       router.replace("/(feeds)/feeds");
       onSuccessfulSwitch?.();
     },
@@ -103,7 +105,7 @@ export function SwitchAccounts({
                 if (account.signedOut) {
                   router.push(`/sign-in?handle=${account.handle}`);
                 } else {
-                  resume.mutate(account.session);
+                  resume.mutate(account);
                 }
               }}
               disabled={resume.isPending || account.did === active}
