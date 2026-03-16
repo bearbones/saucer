@@ -205,7 +205,7 @@ function PostActionRow({ post }: { post: AppBskyFeedDefs.PostView }) {
             : "hover:bg-green-950/40 hover:text-green-400"
         }`}
       >
-        <Repeat2 size={20} />
+        <Repeat2 size={22} />
         <span>{fmtCount(repostCount)}</span>
       </button>
 
@@ -234,6 +234,8 @@ interface PostCardProps {
   primary?: boolean;
   /** Show a thread line below the avatar (connecting to next post) */
   hasReply?: boolean;
+  /** Show a connector line above the avatar (continuing from previous post's thread line) */
+  hasParent?: boolean;
   /** Hide the action row (for inline parent display) */
   hideActions?: boolean;
   /** Don't navigate on click */
@@ -244,6 +246,7 @@ export function PostCard({
   item,
   primary = false,
   hasReply = false,
+  hasParent = false,
   hideActions = false,
   disableNavigation = false,
 }: PostCardProps) {
@@ -260,7 +263,7 @@ export function PostCard({
 
   return (
     <article
-      className={`px-4 pt-3 ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
+      className={`px-4 ${hasParent ? "pt-0" : "pt-3"} ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
         primary
           ? "border-l-2 border-l-blue-500 bg-gray-950"
           : disableNavigation
@@ -280,8 +283,10 @@ export function PostCard({
       )}
 
       <div className="flex gap-3">
-        {/* Avatar column with optional thread line */}
+        {/* Avatar column with optional thread lines */}
         <div className="flex flex-col items-center">
+          {/* Connector line above avatar (continuation from parent post) */}
+          {hasParent && <div className="h-3 w-0.5 bg-gray-700" />}
           {author.avatar ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -304,7 +309,7 @@ export function PostCard({
           {hasReply && <div className="mt-1 w-0.5 flex-1 bg-gray-700" />}
         </div>
 
-        <div className="min-w-0 flex-1">
+        <div className={`min-w-0 flex-1 ${hasParent ? "pt-3" : ""}`}>
           {/* Author + timestamp */}
           <div className="flex items-baseline gap-1.5">
             <span
