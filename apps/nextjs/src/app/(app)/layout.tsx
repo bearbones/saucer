@@ -26,7 +26,7 @@ const TABS = [
 function BottomNav() {
   const pathname = usePathname();
   return (
-    <nav className="flex flex-shrink-0 border-t border-gray-800 bg-black">
+    <nav className="pb-safe flex flex-shrink-0 border-t border-gray-800 bg-black">
       {TABS.map((tab) => {
         const active = pathname.startsWith(tab.href);
         return (

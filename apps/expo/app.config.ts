@@ -25,7 +25,7 @@ const defineConfig = (_: ConfigContext): ExpoConfig => ({
   },
   updates: {
     fallbackToCacheTimeout: 0,
-    url: "https://u.expo.dev/7e8ff69c-ba23-4bd8-98ce-7b61b05766c4",
+    url: "https://u.expo.dev/dd1fc0a9-8082-465f-a087-1e46489bcb0e",
   },
   runtimeVersion: {
     policy: "appVersion",

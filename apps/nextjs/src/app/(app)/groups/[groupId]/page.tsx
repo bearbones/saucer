@@ -28,6 +28,8 @@ function timeSince(date: Date): string {
   return `${Math.floor(secs / 86400)}d`;
 }
 
+const AT_URI_RE = /^at:\/\/did:[a-z0-9:]+\/app\.bsky\.feed\.post\/[a-z0-9]+$/i;
+
 /** Tiny inline Bluesky post embed fetched via the public AppView */
 function BskyPostEmbed({ atUri }: { atUri: string }) {
   const [post, setPost] = useState<{
@@ -41,6 +43,10 @@ function BskyPostEmbed({ atUri }: { atUri: string }) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (!AT_URI_RE.test(atUri)) {
+      setError(true);
+      return;
+    }
     void (async () => {
       try {
         const res = await fetch(

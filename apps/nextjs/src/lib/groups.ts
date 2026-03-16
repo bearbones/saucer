@@ -47,7 +47,6 @@ export function subscribeToGroups(
   did: string,
   onGroups: (groups: Group[]) => void,
 ): Unsubscribe {
-  console.log("[Groups] Subscribing for DID:", did);
   const q = query(
     collection(db, GROUPS_COLLECTION),
     where("members", "array-contains", did),
@@ -55,7 +54,6 @@ export function subscribeToGroups(
   return onSnapshot(
     q,
     (snapshot) => {
-      console.log("[Groups] Snapshot received:", snapshot.docs.length, "groups");
       const groups: Group[] = snapshot.docs.map((d) => ({
         id: d.id,
         ...(d.data() as Omit<Group, "id">),
@@ -79,7 +77,6 @@ export async function createGroup(
     members: [creatorDid],
     createdAt: serverTimestamp(),
   });
-  console.log("[Groups] Created group:", docRef.id, "name:", name);
   return docRef.id;
 }
 

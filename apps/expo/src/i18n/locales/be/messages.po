@@ -18,6 +18,10 @@ msgstr ""
 "X-Crowdin-File: messages.po\n"
 "X-Crowdin-File-ID: 8\n"
 
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:204
+msgid "{0}"
+msgstr ""
+
 #: src/components/notification/index.tsx:190
 msgid "{0} @{1}"
 msgstr "{0} @{1}"
@@ -468,6 +472,7 @@ msgstr "Падпісваючыся, вы пагаджаецеся з нашым�
 msgid "By subscribing, you agree to our <0>Terms and Conditions</0>, the <1>Terms of Use (EULA)</1>, and our <2>Privacy Policy</2>. Subscriptions renew automatically until cancelled."
 msgstr "Падпісваючыся, вы пагаджаецеся з <0>Умовамі</0>, <1>Умовамі карыстання (EULA)</1>, <2>Палітыкай прыватнасці</2>. Падпіска будзе падаўжацца аўтаматычна, пакуль вы не скасуеце."
 
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:190
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/lists/[list].tsx:193
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/lists/[list].tsx:223
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/lists/[list].tsx:317
@@ -685,6 +690,10 @@ msgstr "Не атрымалася загрузіць спісы"
 #~ msgid "Create an account"
 #~ msgstr ""
 
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:165
+msgid "Create Group"
+msgstr ""
+
 #: src/app/create-list.tsx:255
 msgid "Create list"
 msgstr "Стварыць спіс"
@@ -890,6 +899,9 @@ msgstr "Уключыць апавяшчэнні"
 
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/lists/[list].tsx:682
 #: src/app/capture/[author]/[post].tsx:89
+#: src/app/groups/settings.tsx:106
+#: src/app/groups/settings.tsx:125
+#: src/app/groups/settings.tsx:161
 #: src/app/settings/account/change-handle.tsx:53
 msgid "Error"
 msgstr "Памылка"
@@ -910,9 +922,21 @@ msgstr "Не атрымалася загрузіць стужку"
 msgid "Failed to hydrate feed"
 msgstr "Не атрымалася правесці гідратацыю стужкі"
 
+#: src/app/groups/settings.tsx:161
+msgid "Failed to invite member."
+msgstr ""
+
 #: src/lib/hooks/link-press.tsx:74
 msgid "Failed to open link"
 msgstr "Не атрымалася адкрыць спасылку"
+
+#: src/app/groups/settings.tsx:106
+msgid "Failed to update name."
+msgstr ""
+
+#: src/app/groups/settings.tsx:125
+msgid "Failed to upload avatar."
+msgstr ""
 
 #: src/lib/composer/utils.tsx:186
 msgid "Failed to upload image"
@@ -1055,11 +1079,29 @@ msgstr "Graysky Pro"
 msgid "Group Chat"
 msgstr ""
 
-#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:82
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:118
 msgid "Group chats are available once you are logged into your Bluesky account."
 msgstr ""
 
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:175
+#: src/app/groups/settings.tsx:242
+msgid "Group name"
+msgstr ""
+
+#: src/app/groups/settings.tsx:229
+msgid "Group Name"
+msgstr ""
+
+#: src/app/groups/settings.tsx:104
+msgid "Group name updated."
+msgstr ""
+
+#: src/app/groups/settings.tsx:176
+msgid "Group Settings"
+msgstr ""
+
 #: src/app/(tabs)/_layout.tsx:302
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:138
 msgid "Groups"
 msgstr ""
 
@@ -1132,6 +1174,10 @@ msgstr "Параметры відарыса"
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/tag/[tag].tsx:230
 msgid "Invalid mode"
 msgstr "Памылковы рэжым"
+
+#: src/app/groups/settings.tsx:316
+msgid "Invite Members"
+msgstr ""
 
 #: src/components/drawer/drawer-content.tsx:74
 msgid "It's currently set to the {current} theme"
@@ -1208,7 +1254,7 @@ msgstr ""
 msgid "Lists"
 msgstr "Спісы"
 
-#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:92
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:128
 msgid "Loading groups..."
 msgstr ""
 
@@ -1263,7 +1309,7 @@ msgstr "Сартаваць не абраныя стужкі ўручную"
 msgid "Media"
 msgstr "Медыя"
 
-#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:69
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:105
 #: src/app/groups/send-to-group.tsx:89
 #: src/components/groups/send-to-group-sheet.tsx:98
 msgid "members"
@@ -1271,6 +1317,7 @@ msgstr ""
 
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/lists/[list].tsx:89
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/lists/[list].tsx:107
+#: src/app/groups/settings.tsx:273
 msgid "Members"
 msgstr "Удзельнікі"
 
@@ -1414,7 +1461,7 @@ msgstr "Новы допіс"
 msgid "No feeds found - maybe try a different search term?"
 msgstr "Ніводнай стужкі не знойдзена. Мабыць, паспрабуйце іншы запыт?"
 
-#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:109
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:222
 msgid "No Group Chats Yet"
 msgstr ""
 
@@ -1422,11 +1469,11 @@ msgstr ""
 msgid "No Groups"
 msgstr ""
 
-#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:64
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:100
 msgid "No messages yet"
 msgstr ""
 
-#: src/app/groups/[groupId].tsx:149
+#: src/app/groups/[groupId].tsx:209
 msgid "No messages yet. Say something!"
 msgstr ""
 
@@ -1442,6 +1489,10 @@ msgstr "Ніводнага допісу не знойдзена. Мабыць, �
 #: src/app/settings/moderation.tsx:42
 msgid "No preferences"
 msgstr "Няма параметраў"
+
+#: src/app/groups/settings.tsx:385
+msgid "No users found"
+msgstr ""
 
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/search/people.tsx:85
 msgid "No users found - maybe try a different search term?"
@@ -1830,6 +1881,7 @@ msgstr "Набіраюць папулярнасць"
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/feed/[generator]/details.tsx:210
 #: src/app/edit-bio.tsx:146
 #: src/app/edit-bio.tsx:188
+#: src/app/groups/settings.tsx:261
 #: src/app/settings/account/change-handle.tsx:163
 #: src/components/screens/change-password-flow.tsx:209
 msgid "Save"
@@ -1844,6 +1896,7 @@ msgid "Save Image"
 msgstr "Захаваць відарыс"
 
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/profile/[author]/feed/[generator]/details.tsx:199
+#: src/app/groups/settings.tsx:104
 msgid "Saved"
 msgstr "Захавана"
 
@@ -1860,6 +1913,10 @@ msgstr "Пошук"
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/search/index.tsx:185
 msgid "Search all users"
 msgstr "Шукаць сярод усіх карыстальнікаў"
+
+#: src/app/groups/settings.tsx:330
+msgid "Search by handle or name..."
+msgstr ""
 
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/search/feeds.tsx:116
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/search/index.tsx:154
@@ -1985,8 +2042,8 @@ msgid "Share {0}'s post"
 msgstr "Абагуліць допіс {0}"
 
 #: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:115
-msgid "Share a Bluesky post to a group to get started. Groups are private chats outside the AT Protocol."
-msgstr ""
+#~ msgid "Share a Bluesky post to a group to get started. Groups are private chats outside the AT Protocol."
+#~ msgstr ""
 
 #: src/components/post-context-menu.tsx:185
 msgid "Share as image"
@@ -2072,7 +2129,7 @@ msgstr "Паказаць адказы"
 msgid "Show reposts"
 msgstr "Паказваць пашыраныя допісы"
 
-#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:79
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:115
 msgid "Sign in to access Groups"
 msgstr ""
 
@@ -2178,6 +2235,14 @@ msgstr "Сістэмная"
 #: src/lib/composer/keyboard-accessory.tsx:77
 msgid "Take photo"
 msgstr "Зрабіць фота"
+
+#: src/app/(tabs)/(feeds,search,notifications,self,groups)/groups.tsx:228
+msgid "Tap the + button above to create a group."
+msgstr ""
+
+#: src/app/groups/settings.tsx:219
+msgid "Tap to change avatar"
+msgstr ""
 
 #: src/components/embed/video.tsx:149
 msgid "Tap to enter full screen"

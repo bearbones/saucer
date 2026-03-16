@@ -210,7 +210,7 @@ export function GroupSettingsModal({
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-black">
+    <div className="pt-safe pb-safe fixed inset-0 z-50 flex flex-col bg-black">
       {/* Header */}
       <header className="flex flex-shrink-0 items-center justify-between border-b border-gray-800 px-4 py-3">
         <button

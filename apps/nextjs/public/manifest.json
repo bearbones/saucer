@@ -3,6 +3,7 @@
   "short_name": "Saucer",
   "description": "A Bluesky client with group chats",
   "start_url": "/feeds",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",

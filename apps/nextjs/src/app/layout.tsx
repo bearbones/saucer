@@ -13,7 +13,7 @@ const inter = Inter({
 export const metadata = {
   title: "Saucer - a Bluesky client",
   description: "A Bluesky client with group chats.",
-  metadataBase: new URL("https://graysky.app"),
+  metadataBase: new URL("https://ayylmao.app"),
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -28,7 +28,7 @@ export const metadata = {
     description: "A Bluesky client with group chats.",
     type: "website",
     locale: "en_GB",
-    url: "https://graysky.app",
+    url: "https://ayylmao.app",
     siteName: "Saucer",
   },
 };
@@ -36,6 +36,7 @@ export const metadata = {
 export const viewport = {
   colorScheme: "dark",
   themeColor: "#000000",
+  viewportFit: "cover" as const,
 };
 
 export default function RootLayout({

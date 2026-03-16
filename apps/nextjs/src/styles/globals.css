@@ -4,3 +4,7 @@
 body {
   word-break: break-word;
 }
+
+/* iOS safe-area utilities for notch / Dynamic Island / home indicator */
+.pt-safe { padding-top: env(safe-area-inset-top); }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }

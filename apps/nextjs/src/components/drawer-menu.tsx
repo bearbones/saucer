@@ -19,14 +19,20 @@ export function DrawerMenu() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [open]);
 
-  // Lock body scroll when open
+  // Lock body scroll when open (position:fixed works reliably on iOS Safari)
   useEffect(() => {
     if (open) {
+      document.body.style.position = "fixed";
+      document.body.style.inset = "0";
       document.body.style.overflow = "hidden";
     } else {
+      document.body.style.position = "";
+      document.body.style.inset = "";
       document.body.style.overflow = "";
     }
     return () => {
+      document.body.style.position = "";
+      document.body.style.inset = "";
       document.body.style.overflow = "";
     };
   }, [open]);
