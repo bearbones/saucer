@@ -1,32 +1,36 @@
-# Graysky - Bluesky Client Monorepo
+# Saucer - Bluesky Client
 
-A full-stack Bluesky client with React Native mobile app, Next.js web app, and push notification service.
+A Bluesky client with a React Native mobile app (Android) and a Next.js PWA with Firebase group chat.
+
+Fork of [mozzius/graysky](https://github.com/mozzius/graysky). Package name: `com.scantics.saucer`.
 
 ## Quick Commands
 
 ```bash
 pnpm dev           # Start Expo mobile app
+pnpm dev:next      # Start Next.js PWA dev server
 pnpm dev:both      # Start Expo + Next.js in parallel
-pnpm dev:next      # Start Next.js web app only
-pnpm dev:push      # Start push notification service
 pnpm lint          # Run ESLint across all packages
 pnpm format:fix    # Run Prettier formatting
 pnpm typecheck     # TypeScript type checking
-pnpm db:generate   # Generate Prisma client
-pnpm db:push       # Push Prisma schema to database
 ```
+
+## What We're Building
+
+- **Mobile app** (Expo/React Native) — Android Bluesky client
+- **PWA** (Next.js) — Installable web app with Bluesky feeds, search, notifications, profile, and **Firebase group chat**
+- Group chat uses Firestore for real-time messaging with Bluesky post embeds
 
 ## Project Structure
 
 ```
 apps/
   expo/          # React Native mobile app (Expo 54, RN 0.81, React 19)
-  nextjs/        # Next.js 16 web app (marketing/web presence)
-  push-notifs/   # Backend push notification service
+  nextjs/        # Next.js 16 PWA (the web app we're actively developing)
 
 packages/
-  api/           # tRPC router (shared API layer)
-  db/            # Prisma database client and schema
+  api/           # tRPC router (inherited from graysky, not actively used by PWA)
+  db/            # Prisma database client (inherited, not used by PWA)
 
 tooling/
   eslint/        # Shared ESLint configs (flat config format)
@@ -38,47 +42,36 @@ tooling/
 ## Key Technologies
 
 - **Mobile**: Expo 54, React Native 0.81, Expo Router, NativeWind v2
-- **Web**: Next.js 16, Tailwind CSS 4
-- **API**: tRPC v11, Zod validation, SuperJSON serialization
-- **Database**: Prisma ORM, MySQL (PlanetScale)
-- **Build**: pnpm workspaces, Turbo (with remote caching)
+- **PWA**: Next.js 16, Tailwind CSS 4, @ducanh2912/next-pwa
+- **Chat**: Firebase (Firestore + Storage) for group messaging
+- **Auth**: Direct Bluesky API auth (localStorage sessions in PWA)
+- **Build**: pnpm workspaces, Turbo
 - **Bluesky**: @atproto/api for protocol integration
-
-## Package Dependencies
-
-```
-expo → @graysky/api, @graysky/tailwind-config
-nextjs → @graysky/api, @graysky/db, @graysky/tailwind-config
-push-notifs → @graysky/db
-api → @graysky/db
-```
-
-## Database Models (Prisma)
-
-- `User` - Base user by DID (Bluesky identifier)
-- `TranslatablePost` / `PostTranslation` - Translation feature
-- `Poll` / `PollVote` - Polls feature
-- `PushToken` - Push notification device tokens
-- `Mute` / `MuteList` - Mute functionality
 
 ## Environment Variables
 
-Copy `.env.example` to `.env`. Key variables:
-- `DATABASE_URL` - PlanetScale MySQL connection
-- `GOOGLE_API_KEY` - Translation API
-- `DEEPL_API_KEY` - Alternative translation
-- Various RevenueCat, Sentry keys for mobile
+The PWA only needs these env vars (see `apps/nextjs/.env.cloudflare`):
+
+- `SKIP_ENV_VALIDATION=1` — bypasses inherited Zod checks for unused vars
+- `NEXT_PUBLIC_FIREBASE_*` — Firebase client config (6 vars)
+
+Legacy vars from graysky (`DATABASE_URL`, `CK_API_KEY`, `CK_FORM_ID`, `GOOGLE_API_KEY`, etc.) are **not used** by the PWA. Set `SKIP_ENV_VALIDATION=1` to avoid needing them at build time.
+
+## Build & Deploy
+
+- **PWA**: Deployed via Vercel, auto-deploys on push to `main`
+- **Mobile**: EAS Build for Android (`eas build`)
+- **Domain**: ayylmao.app (Cloudflare DNS)
 
 ## Code Conventions
 
 - Strict TypeScript with `noUncheckedIndexedAccess`
 - ESLint flat config with typescript-eslint and React Compiler
 - Import order: react → next → expo → third-party → @graysky → relative
-- tRPC for end-to-end type safety
 - Lingui for i18n in mobile app (`pnpm extract` / `pnpm compile`)
 
-## Build & Deploy
+## Git Workflow
 
-- **Mobile**: EAS Build for iOS/Android (`eas build`)
-- **Web**: Vercel hosting
-- **CI**: GitHub Actions runs lint, typecheck, build on PRs
+- Single contributor for now — commit directly to `main`
+- `origin` = `bearbones/saucer` (our repo)
+- `upstream` = `mozzius/graysky` (original, never PR here)
