@@ -205,7 +205,7 @@ function PostActionRow({ post }: { post: AppBskyFeedDefs.PostView }) {
             : "hover:bg-green-950/40 hover:text-green-400"
         }`}
       >
-        <Repeat2 size={18} />
+        <Repeat2 size={20} />
         <span>{fmtCount(repostCount)}</span>
       </button>
 
@@ -260,7 +260,7 @@ export function PostCard({
 
   return (
     <article
-      className={`border-b border-gray-800 px-4 py-3 ${
+      className={`px-4 pt-3 ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
         primary
           ? "border-l-2 border-l-blue-500 bg-gray-950"
           : disableNavigation

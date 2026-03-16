@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,6 +13,16 @@ import {
 import { AuthContext } from "~/lib/auth-context";
 import { createAgent } from "~/lib/bsky-api";
 
+// ── Nav visibility context ────────────────────────────────────────────────────
+
+export const NavVisibilityContext = createContext<(visible: boolean) => void>(
+  () => {},
+);
+
+export function useSetNavVisible() {
+  return useContext(NavVisibilityContext);
+}
+
 // ── Bottom navigation tab bar ─────────────────────────────────────────────────
 
 const TABS = [
@@ -23,10 +33,14 @@ const TABS = [
   { label: "Me", icon: "◯", href: "/profile" },
 ] as const;
 
-function BottomNav() {
+function BottomNav({ visible }: { visible: boolean }) {
   const pathname = usePathname();
   return (
-    <nav className="pb-safe flex flex-shrink-0 border-t border-gray-800 bg-black">
+    <nav
+      className={`pb-safe flex flex-shrink-0 border-t border-gray-800 bg-black transition-transform duration-300 ${
+        visible ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
       {TABS.map((tab) => {
         const active = pathname.startsWith(tab.href);
         return (
@@ -56,6 +70,7 @@ export default function AppLayout({
   const [session, setSession] = useState<WebSession | null | "loading">(
     "loading",
   );
+  const [navVisible, setNavVisible] = useState(true);
   const [form, setForm] = useState({ identifier: "", password: "" });
   const [error, setError] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
@@ -171,13 +186,15 @@ export default function AppLayout({
   return (
     // agent is guaranteed non-null here because session is a WebSession
     <AuthContext.Provider value={{ session, agent: agent!, logout: handleLogout }}>
-      <div className="flex h-screen flex-col bg-black text-white">
-        {/* Page content */}
-        <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
+      <NavVisibilityContext.Provider value={setNavVisible}>
+        <div className="flex h-dvh flex-col bg-black text-white">
+          {/* Page content */}
+          <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
 
-        {/* Bottom tab bar */}
-        <BottomNav />
-      </div>
+          {/* Bottom tab bar */}
+          <BottomNav visible={navVisible} />
+        </div>
+      </NavVisibilityContext.Provider>
     </AuthContext.Provider>
   );
 }
