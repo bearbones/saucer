@@ -11,6 +11,10 @@ const nextConfig = {
   /** Suppress Turbopack/webpack conflict warning (next-pwa uses webpack config) */
   turbopack: {},
 
+  async redirects() {
+    return [{ source: "/", destination: "/feeds", permanent: false }];
+  },
+
   async headers() {
     return [
       {
