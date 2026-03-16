@@ -122,6 +122,7 @@ export default function ThreadPage() {
                 item={{ post: mainPost } as AppBskyFeedDefs.FeedViewPost}
                 primary
                 disableNavigation
+                hasReply={replies.length > 0}
               />
             )}
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -10,6 +10,7 @@ import { AppBskyFeedDefs } from "@atproto/api";
 import { PostCard } from "~/components/post-card";
 import { DrawerMenu } from "~/components/drawer-menu";
 import { useAuth } from "~/lib/auth-context";
+import { useSetNavVisible } from "~/app/(app)/layout";
 import { decodeFeedUri } from "~/lib/feed-uri";
 
 export default function FeedTimelinePage() {
@@ -18,6 +19,9 @@ export default function FeedTimelinePage() {
 
   const isFollowing = params.feed === "following";
   const feedUri = isFollowing ? null : decodeFeedUri(params.feed);
+
+  const setNavVisible = useSetNavVisible();
+  const lastScrollY = useRef(0);
 
   const [feedName, setFeedName] = useState(isFollowing ? "Following" : "Feed");
   const [feed, setFeed] = useState<AppBskyFeedDefs.FeedViewPost[]>([]);
@@ -77,6 +81,11 @@ export default function FeedTimelinePage() {
     void load();
   }, [load]);
 
+  // Restore nav when leaving this page
+  useEffect(() => {
+    return () => setNavVisible(true);
+  }, [setNavVisible]);
+
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
@@ -94,7 +103,18 @@ export default function FeedTimelinePage() {
       </header>
 
       {/* Timeline */}
-      <div className="flex-1 overflow-y-auto">
+      <div
+        className="flex-1 overflow-y-auto"
+        onScroll={(e) => {
+          const current = e.currentTarget.scrollTop;
+          if (current < 50 || current < lastScrollY.current) {
+            setNavVisible(true);
+          } else {
+            setNavVisible(false);
+          }
+          lastScrollY.current = current;
+        }}
+      >
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
