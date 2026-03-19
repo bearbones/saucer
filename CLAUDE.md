@@ -72,6 +72,7 @@ Legacy vars from graysky (`DATABASE_URL`, `CK_API_KEY`, `CK_FORM_ID`, `GOOGLE_AP
 
 ## Git Workflow
 
-- Single contributor for now — commit directly to `main`
+- Single contributor for now — commit and develop directly on `main`
+- Default branch for all development is `main` (no feature branches needed)
 - `origin` = `bearbones/saucer` (our repo)
 - `upstream` = `mozzius/graysky` (original, never PR here)
