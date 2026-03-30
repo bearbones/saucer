@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 import { type AppBskyActorDefs, type AppBskyFeedDefs } from "@atproto/api";
+import { Search } from "lucide-react";
 
+import { Avatar } from "~/components/avatar";
 import { PostCard } from "~/components/post-card";
 import { useAuth } from "~/lib/auth-context";
 
@@ -15,27 +17,18 @@ function ActorRow({ actor }: { actor: AppBskyActorDefs.ProfileView }) {
       href={`https://bsky.app/profile/${actor.handle}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-3 border-b border-gray-800 px-4 py-3 hover:bg-gray-900"
+      className="flex items-center gap-3 border-b border-[var(--color-border-primary)] px-4 py-3 hover:bg-[var(--color-bg-tertiary)]"
     >
-      {actor.avatar ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={actor.avatar}
-          alt={actor.handle}
-          className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
-        />
-      ) : (
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-gray-800">
-          👤
-        </div>
-      )}
+      <Avatar src={actor.avatar} alt={actor.handle} size="lg" />
       <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold text-white">
+        <p className="truncate font-semibold text-[var(--color-text-primary)]">
           {actor.displayName ?? actor.handle}
         </p>
-        <p className="truncate text-sm text-gray-500">@{actor.handle}</p>
+        <p className="truncate text-sm text-[var(--color-text-tertiary)]">
+          @{actor.handle}
+        </p>
         {actor.description && (
-          <p className="mt-0.5 line-clamp-1 text-xs text-gray-600">
+          <p className="mt-0.5 line-clamp-1 text-xs text-[var(--color-text-muted)]">
             {actor.description}
           </p>
         )}
@@ -87,22 +80,26 @@ export default function SearchPage() {
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <header className="flex-shrink-0 border-b border-gray-800 px-4 pb-0 pt-3">
-        <h1 className="mb-3 text-lg font-bold">Search</h1>
+      <header className="flex-shrink-0 border-b border-[var(--color-border-primary)] px-4 pb-0 pt-3">
+        <h1 className="mb-3 text-lg font-bold text-[var(--color-text-primary)]">
+          Search
+        </h1>
 
         {/* Search bar */}
         <div className="relative mb-3">
-          <span className="absolute left-3 top-2.5 text-gray-500">⌕</span>
+          <span className="pointer-events-none absolute left-3 top-2.5 text-[var(--color-text-muted)]">
+            <Search size={16} />
+          </span>
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search Bluesky…"
-            className="w-full rounded-xl border border-gray-700 bg-gray-900 py-2.5 pl-8 pr-4 text-sm text-white placeholder-gray-600 focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-xl border border-[var(--color-border-secondary)] bg-[var(--color-bg-tertiary)] py-2.5 pl-9 pr-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:ring-2 focus:ring-[var(--color-accent)] focus:outline-none"
           />
           {searching && (
             <span className="absolute right-3 top-2.5">
-              <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent" />
+              <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-text-muted)] border-t-transparent" />
             </span>
           )}
         </div>
@@ -115,8 +112,8 @@ export default function SearchPage() {
               onClick={() => setTab(t)}
               className={`flex-1 border-b-2 pb-2 text-sm font-medium capitalize transition-colors ${
                 tab === t
-                  ? "border-blue-500 text-white"
-                  : "border-transparent text-gray-500"
+                  ? "border-[var(--color-accent)] text-[var(--color-text-primary)]"
+                  : "border-transparent text-[var(--color-text-tertiary)]"
               }`}
             >
               {t}
@@ -128,13 +125,25 @@ export default function SearchPage() {
       {/* Results */}
       <div className="flex-1 overflow-y-auto">
         {query.trim() === "" ? (
-          <p className="py-16 text-center text-sm text-gray-600">
-            Search for people or posts on Bluesky
-          </p>
+          <div className="flex flex-col items-center py-16">
+            <Search
+              size={32}
+              className="mb-3 text-[var(--color-text-muted)]"
+            />
+            <p className="text-sm text-[var(--color-text-muted)]">
+              Search for people or posts on Bluesky
+            </p>
+          </div>
         ) : isEmpty ? (
-          <p className="py-16 text-center text-sm text-gray-600">
-            No results for &ldquo;{query}&rdquo;
-          </p>
+          <div className="flex flex-col items-center py-16">
+            <Search
+              size={32}
+              className="mb-3 text-[var(--color-text-muted)]"
+            />
+            <p className="text-sm text-[var(--color-text-muted)]">
+              No results for &ldquo;{query}&rdquo;
+            </p>
+          </div>
         ) : tab === "people" ? (
           actors.map((actor) => <ActorRow key={actor.did} actor={actor} />)
         ) : (

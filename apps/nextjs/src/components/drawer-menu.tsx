@@ -1,13 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LogOut } from "lucide-react";
+import Link from "next/link";
+import { LogOut, Settings as SettingsIcon, User } from "lucide-react";
 
+import { Avatar } from "~/components/avatar";
 import { useAuth } from "~/lib/auth-context";
 
 export function DrawerMenu() {
   const { session, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  // Trigger slide-in after mount
+  useEffect(() => {
+    if (open) {
+      // Delay one frame so the initial off-screen state renders first
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setVisible(true);
+        });
+      });
+    } else {
+      setVisible(false);
+    }
+  }, [open]);
 
   // Close on Escape key
   useEffect(() => {
@@ -45,18 +62,7 @@ export function DrawerMenu() {
         className="flex-shrink-0"
         aria-label="Open menu"
       >
-        {session.avatar ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={session.avatar}
-            alt={session.handle}
-            className="h-8 w-8 rounded-full object-cover"
-          />
-        ) : (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-800 text-sm">
-            👤
-          </div>
-        )}
+        <Avatar src={session.avatar} alt={session.handle} size="sm" />
       </button>
 
       {/* Overlay + Drawer */}
@@ -64,39 +70,56 @@ export function DrawerMenu() {
         <div className="fixed inset-0 z-50 flex">
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/60"
+            className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${visible ? "opacity-100" : "opacity-0"}`}
             onClick={() => setOpen(false)}
           />
 
           {/* Panel */}
-          <div className="relative z-10 flex h-full w-[280px] flex-col bg-gray-950 shadow-xl">
+          <div
+            className={`relative z-10 flex h-full w-[280px] flex-col bg-[var(--color-bg-secondary)] shadow-xl transition-transform duration-300 ${visible ? "translate-x-0" : "-translate-x-full"}`}
+          >
             {/* User info */}
-            <div className="border-b border-gray-800 p-5">
-              {session.avatar ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+            <div className="border-b border-[var(--color-border-primary)] p-5">
+              <div className="mb-3">
+                <Avatar
                   src={session.avatar}
                   alt={session.handle}
-                  className="mb-3 h-16 w-16 rounded-full object-cover"
+                  size="xl"
                 />
-              ) : (
-                <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gray-800 text-2xl">
-                  👤
-                </div>
-              )}
-              <p className="truncate text-base font-bold text-white">
+              </div>
+              <p className="truncate text-base font-bold text-[var(--color-text-primary)]">
                 {session.displayName ?? session.handle}
               </p>
-              <p className="truncate text-sm text-gray-500">
+              <p className="truncate text-sm text-[var(--color-text-secondary)]">
                 @{session.handle}
               </p>
             </div>
+
+            {/* Navigation */}
+            <nav className="flex flex-col py-2">
+              <Link
+                href="/profile"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-5 py-3 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-text-primary)]"
+              >
+                <User size={18} />
+                Profile
+              </Link>
+              <Link
+                href="/settings"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-5 py-3 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-text-primary)]"
+              >
+                <SettingsIcon size={18} />
+                Settings
+              </Link>
+            </nav>
 
             {/* Spacer */}
             <div className="flex-1" />
 
             {/* Sign out */}
-            <div className="border-t border-gray-800 p-4">
+            <div className="border-t border-[var(--color-border-primary)] p-4">
               <button
                 onClick={() => {
                   setOpen(false);

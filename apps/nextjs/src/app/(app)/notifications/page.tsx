@@ -1,9 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import {
+  AtSign,
+  Bell,
+  Heart,
+  MessageCircle,
+  Quote,
+  RefreshCw,
+  Repeat2,
+  UserPlus,
+} from "lucide-react";
 
 import { type AppBskyNotificationListNotifications } from "@atproto/api";
 
+import { Avatar } from "~/components/avatar";
+import { SkeletonNotifRow } from "~/components/skeleton";
 import { useAuth } from "~/lib/auth-context";
 
 type Notif = AppBskyNotificationListNotifications.Notification;
@@ -20,15 +32,52 @@ function reasonLabel(reason: string): string {
   }
 }
 
-function reasonIcon(reason: string): string {
+function ReasonIcon({ reason }: { reason: string }) {
+  const shared = "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full";
+
   switch (reason) {
-    case "like": return "♡";
-    case "repost": return "↺";
-    case "follow": return "➕";
-    case "mention": return "＠";
-    case "reply": return "💬";
-    case "quote": return "❝";
-    default: return "🔔";
+    case "like":
+      return (
+        <div className={`${shared} bg-[var(--color-notif-like-bg)]`}>
+          <Heart size={18} className="text-[var(--color-notif-like)]" />
+        </div>
+      );
+    case "repost":
+      return (
+        <div className={`${shared} bg-[var(--color-notif-repost-bg)]`}>
+          <Repeat2 size={18} className="text-[var(--color-notif-repost)]" />
+        </div>
+      );
+    case "follow":
+      return (
+        <div className={`${shared} bg-[var(--color-notif-follow-bg)]`}>
+          <UserPlus size={18} className="text-[var(--color-notif-follow)]" />
+        </div>
+      );
+    case "mention":
+      return (
+        <div className={`${shared} bg-[var(--color-notif-mention-bg)]`}>
+          <AtSign size={18} className="text-[var(--color-notif-mention)]" />
+        </div>
+      );
+    case "reply":
+      return (
+        <div className={`${shared} bg-[var(--color-notif-reply-bg)]`}>
+          <MessageCircle size={18} className="text-[var(--color-notif-reply)]" />
+        </div>
+      );
+    case "quote":
+      return (
+        <div className={`${shared} bg-[var(--color-notif-quote-bg)]`}>
+          <Quote size={18} className="text-[var(--color-notif-quote)]" />
+        </div>
+      );
+    default:
+      return (
+        <div className={`${shared} bg-[var(--color-bg-tertiary)]`}>
+          <Bell size={18} className="text-[var(--color-text-muted)]" />
+        </div>
+      );
   }
 }
 
@@ -44,35 +93,24 @@ function NotifRow({ notif }: { notif: Notif }) {
   const { author, reason, isRead, indexedAt } = notif;
   return (
     <div
-      className={`flex gap-3 border-b border-gray-800 px-4 py-3 ${
-        isRead ? "" : "border-l-2 border-l-blue-500 bg-blue-950/20"
+      className={`flex gap-3 border-b border-[var(--color-border-primary)] px-4 py-3 ${
+        isRead ? "" : "border-l-2 border-l-[var(--color-accent)] bg-[var(--color-accent-muted)]"
       }`}
     >
-      {/* Reason icon */}
-      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gray-900 text-lg">
-        {reasonIcon(reason)}
-      </div>
+      <ReasonIcon reason={reason} />
 
       <div className="min-w-0 flex-1">
         <div className="flex items-start gap-2">
-          {/* Author avatar */}
-          {author.avatar && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={author.avatar}
-              alt={author.handle}
-              className="h-7 w-7 flex-shrink-0 rounded-full object-cover"
-            />
-          )}
+          <Avatar src={author.avatar} alt={author.handle} size="xs" />
           <div className="min-w-0 flex-1">
-            <p className="text-sm text-white">
+            <p className="text-sm text-[var(--color-text-primary)]">
               <span className="font-semibold">
                 {author.displayName ?? author.handle}
               </span>{" "}
-              <span className="text-gray-400">{reasonLabel(reason)}</span>
+              <span className="text-[var(--color-text-secondary)]">{reasonLabel(reason)}</span>
             </p>
           </div>
-          <span className="flex-shrink-0 text-xs text-gray-600">
+          <span className="flex-shrink-0 text-xs text-[var(--color-text-muted)]">
             {timeAgo(indexedAt)}
           </span>
         </div>
@@ -111,11 +149,11 @@ export default function NotificationsPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex flex-shrink-0 items-center justify-between border-b border-gray-800 px-4 py-3">
-        <h1 className="text-lg font-bold">
+      <header className="flex flex-shrink-0 items-center justify-between border-b border-[var(--color-border-primary)] px-4 py-3">
+        <h1 className="text-lg font-bold text-[var(--color-text-primary)]">
           Notifications
           {unread > 0 && (
-            <span className="ml-2 rounded-full bg-blue-500 px-1.5 py-0.5 text-xs font-normal text-white">
+            <span className="ml-2 rounded-full bg-[var(--color-accent)] px-1.5 py-0.5 text-xs font-normal text-white">
               {unread}
             </span>
           )}
@@ -123,31 +161,39 @@ export default function NotificationsPage() {
         <button
           onClick={() => void load()}
           disabled={loading}
-          className="text-xs text-blue-400 hover:text-blue-300 disabled:opacity-40"
+          className="flex items-center gap-1 text-xs text-[var(--color-accent-text)] hover:opacity-80 disabled:opacity-40"
         >
-          ↺ Refresh
+          <RefreshCw size={14} />
+          Refresh
         </button>
       </header>
 
       <div className="flex-1 overflow-y-auto">
         {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div>
+            <SkeletonNotifRow />
+            <SkeletonNotifRow />
+            <SkeletonNotifRow />
+            <SkeletonNotifRow />
+            <SkeletonNotifRow />
           </div>
         ) : error ? (
           <div className="flex flex-col items-center py-16 text-center">
-            <p className="mb-3 text-sm text-gray-500">{error}</p>
+            <p className="mb-3 text-sm text-[var(--color-text-tertiary)]">{error}</p>
             <button
               onClick={() => void load()}
-              className="rounded-xl bg-blue-500 px-4 py-2 text-sm text-white"
+              className="rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm text-white transition hover:bg-[var(--color-accent-hover)]"
             >
               Try again
             </button>
           </div>
         ) : notifs.length === 0 ? (
-          <p className="py-16 text-center text-sm text-gray-600">
-            No notifications yet
-          </p>
+          <div className="flex flex-col items-center py-16">
+            <Bell size={32} className="mb-3 text-[var(--color-text-muted)]" />
+            <p className="text-sm text-[var(--color-text-muted)]">
+              No notifications yet
+            </p>
+          </div>
         ) : (
           notifs.map((n) => <NotifRow key={n.uri} notif={n} />)
         )}

@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Home } from "lucide-react";
+import { ChevronRight, Hash, Home } from "lucide-react";
 
 import { type AppBskyFeedDefs as FeedDefsNS } from "@atproto/api";
 
 import { DrawerMenu } from "~/components/drawer-menu";
+import { SkeletonFeedRow } from "~/components/skeleton";
 import { useAuth } from "~/lib/auth-context";
 import { encodeFeedUri } from "~/lib/feed-uri";
 
@@ -80,7 +81,7 @@ export default function FeedsPage() {
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <header className="flex flex-shrink-0 items-center gap-3 border-b border-gray-800 px-4 py-3">
+      <header className="flex flex-shrink-0 items-center gap-3 border-b border-[var(--color-border-primary)] px-4 py-3">
         <DrawerMenu />
         <h1 className="text-lg font-bold">Feeds</h1>
       </header>
@@ -89,34 +90,36 @@ export default function FeedsPage() {
         {/* Following — always shown immediately, no API needed */}
         <Link
           href="/feeds/following"
-          className="flex items-center gap-4 border-b border-gray-800 px-4 py-5 transition hover:bg-gray-900/50 active:bg-gray-900"
+          className="flex items-center gap-4 border-b border-[var(--color-border-primary)] px-4 py-5 transition hover:bg-[var(--color-bg-hover)] active:bg-[var(--color-bg-active)]"
         >
           <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-blue-600">
             <Home size={28} className="text-white" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-base font-semibold text-white">Following</p>
-            <p className="text-sm text-gray-500">
+            <p className="text-base font-semibold text-[var(--color-text-primary)]">Following</p>
+            <p className="text-sm text-[var(--color-text-muted)]">
               Posts from people you follow
             </p>
           </div>
-          <span className="text-gray-600">›</span>
+          <ChevronRight size={16} className="text-[var(--color-text-muted)]" />
         </Link>
 
         {/* Custom feeds — loaded asynchronously */}
         {!feedsLoaded ? (
-          <div className="flex items-center justify-center py-8">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div>
+            <SkeletonFeedRow />
+            <SkeletonFeedRow />
+            <SkeletonFeedRow />
           </div>
         ) : feedsError ? (
-          <p className="px-4 py-4 text-xs text-gray-600">
+          <p className="px-4 py-4 text-xs text-[var(--color-text-muted)]">
             Could not load custom feeds: {feedsError}
           </p>
         ) : (
           <>
             {pinned.length > 0 && (
               <div>
-                <p className="px-4 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <p className="px-4 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
                   Favourites
                 </p>
                 {pinned.map((gen) => (
@@ -127,7 +130,7 @@ export default function FeedsPage() {
 
             {saved.length > 0 && (
               <div>
-                <p className="px-4 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <p className="px-4 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
                   All Feeds
                 </p>
                 {saved.map((gen) => (
@@ -148,7 +151,7 @@ function FeedRow({ gen }: { gen: GeneratorView }) {
   return (
     <Link
       href={`/feeds/${encodeFeedUri(gen.uri)}`}
-      className="flex items-center gap-3 border-b border-gray-800 px-4 py-3 transition hover:bg-gray-900/50 active:bg-gray-900"
+      className="flex items-center gap-3 border-b border-[var(--color-border-primary)] px-4 py-3 transition hover:bg-[var(--color-bg-hover)] active:bg-[var(--color-bg-active)]"
     >
       {gen.avatar ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -158,19 +161,19 @@ function FeedRow({ gen }: { gen: GeneratorView }) {
           className="h-10 w-10 flex-shrink-0 rounded-lg object-cover"
         />
       ) : (
-        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-950 text-lg">
-          #
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]">
+          <Hash size={18} className="text-[var(--color-accent-text)]" />
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-white">
+        <p className="truncate text-sm font-medium text-[var(--color-text-primary)]">
           {gen.displayName}
         </p>
-        <p className="truncate text-xs text-gray-500">
+        <p className="truncate text-xs text-[var(--color-text-muted)]">
           by @{gen.creator.handle}
         </p>
       </div>
-      <span className="text-gray-600">›</span>
+      <ChevronRight size={16} className="text-[var(--color-text-muted)]" />
     </Link>
   );
 }

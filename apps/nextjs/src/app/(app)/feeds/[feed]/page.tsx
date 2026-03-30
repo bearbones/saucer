@@ -9,6 +9,7 @@ import { AppBskyFeedDefs } from "@atproto/api";
 
 import { PostCard } from "~/components/post-card";
 import { DrawerMenu } from "~/components/drawer-menu";
+import { SkeletonPostCard } from "~/components/skeleton";
 import { useAuth } from "~/lib/auth-context";
 import { useSetNavVisible } from "~/app/(app)/layout";
 import { decodeFeedUri } from "~/lib/feed-uri";
@@ -89,15 +90,15 @@ export default function FeedTimelinePage() {
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <header className="flex flex-shrink-0 items-center gap-3 border-b border-gray-800 px-4 py-3">
+      <header className="flex flex-shrink-0 items-center gap-3 border-b border-[var(--color-border-primary)] px-4 py-3">
         <DrawerMenu />
         <Link
           href="/feeds"
-          className="flex-shrink-0 text-gray-400 hover:text-white"
+          className="flex-shrink-0 text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)]"
         >
           <ArrowLeft size={20} />
         </Link>
-        <h1 className="min-w-0 flex-1 truncate text-lg font-bold">
+        <h1 className="min-w-0 flex-1 truncate text-lg font-bold text-[var(--color-text-primary)]">
           {feedName}
         </h1>
       </header>
@@ -116,21 +117,25 @@ export default function FeedTimelinePage() {
         }}
       >
         {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div>
+            <SkeletonPostCard />
+            <SkeletonPostCard />
+            <SkeletonPostCard />
+            <SkeletonPostCard />
+            <SkeletonPostCard />
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <p className="mb-3 text-sm text-gray-500">{error}</p>
+            <p className="mb-3 text-sm text-[var(--color-text-tertiary)]">{error}</p>
             <button
               onClick={() => void load()}
-              className="rounded-xl bg-blue-500 px-4 py-2 text-sm text-white"
+              className="rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm text-white transition hover:bg-[var(--color-accent-hover)]"
             >
               Try again
             </button>
           </div>
         ) : feed.length === 0 ? (
-          <p className="py-16 text-center text-sm text-gray-600">
+          <p className="py-16 text-center text-sm text-[var(--color-text-muted)]">
             {isFollowing
               ? "Your feed is empty. Follow some people on Bluesky!"
               : "This feed has no posts yet."}
@@ -170,7 +175,7 @@ export default function FeedTimelinePage() {
                 <button
                   onClick={() => void load(cursor)}
                   disabled={loadingMore}
-                  className="rounded-xl border border-gray-700 px-5 py-2 text-sm text-gray-400 hover:border-gray-500 disabled:opacity-40"
+                  className="rounded-xl border border-[var(--color-border-secondary)] px-5 py-2 text-sm text-[var(--color-text-secondary)] transition hover:border-[var(--color-text-muted)] disabled:opacity-40"
                 >
                   {loadingMore ? "Loading..." : "Load more"}
                 </button>

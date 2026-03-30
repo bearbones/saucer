@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Camera, X } from "lucide-react";
 
+import { Avatar } from "~/components/avatar";
 import { useAuth } from "~/lib/auth-context";
 import {
   addGroupMember,
@@ -98,8 +100,6 @@ export function GroupSettingsModal({
   useEffect(() => {
     const q = searchQuery.trim();
     if (!q) {
-      // Functional update: returns the same reference when already empty,
-      // so React bails out and avoids an infinite re-render loop.
       setSearchResults((prev) => (prev.length > 0 ? [] : prev));
       return;
     }
@@ -113,7 +113,6 @@ export function GroupSettingsModal({
         if (!res.ok) throw new Error("search failed");
         const data = (await res.json()) as { actors: BskyActor[] };
 
-        // Exclude self, already-pending, and already-in-group DIDs
         const excluded = new Set([
           session.did,
           ...pendingMembers.map((m) => m.did),
@@ -163,14 +162,12 @@ export function GroupSettingsModal({
     setError("");
     try {
       if (mode === "create") {
-        // 1. Create the Firestore document with all members at once
         const newId = await createGroupFull(
           name.trim(),
           session.did,
           pendingMembers.map((m) => m.did),
         );
 
-        // 2. Upload avatar if the user picked one
         if (avatarFile) {
           const url = await uploadGroupAvatarFile(newId, avatarFile);
           await updateGroupAvatar(newId, url);
@@ -179,7 +176,6 @@ export function GroupSettingsModal({
         onClose();
         router.push(`/groups/${newId}`);
       } else {
-        // Edit mode
         if (!groupId) return;
 
         if (name.trim() !== groupName) {
@@ -189,7 +185,6 @@ export function GroupSettingsModal({
           const url = await uploadGroupAvatarFile(groupId, avatarFile);
           await updateGroupAvatar(groupId, url);
         }
-        // Add new members one-by-one (each triggers a system message)
         for (const m of pendingMembers) {
           await addGroupMember(
             groupId,
@@ -210,22 +205,22 @@ export function GroupSettingsModal({
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="pt-safe pb-safe fixed inset-0 z-50 flex flex-col bg-black">
+    <div className="pt-safe pb-safe fixed inset-0 z-50 flex flex-col bg-[var(--color-bg-primary)]">
       {/* Header */}
-      <header className="flex flex-shrink-0 items-center justify-between border-b border-gray-800 px-4 py-3">
+      <header className="flex flex-shrink-0 items-center justify-between border-b border-[var(--color-border-primary)] px-4 py-3">
         <button
           onClick={onClose}
-          className="text-sm text-gray-400 hover:text-white"
+          className="text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)]"
         >
           Cancel
         </button>
-        <h2 className="font-semibold">
+        <h2 className="font-semibold text-[var(--color-text-primary)]">
           {mode === "create" ? "New Group" : "Group Settings"}
         </h2>
         <button
           onClick={() => void handleSave()}
           disabled={!name.trim() || saving}
-          className="text-sm font-semibold text-blue-500 disabled:opacity-40"
+          className="text-sm font-semibold text-[var(--color-accent)] disabled:opacity-40"
         >
           {saving ? "Saving…" : mode === "create" ? "Create" : "Save"}
         </button>
@@ -248,13 +243,11 @@ export function GroupSettingsModal({
                 className="h-24 w-24 rounded-full object-cover"
               />
             ) : (
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-950 text-4xl">
-                👥
-              </div>
+              <Avatar src={null} alt="Group" size="2xl" fallbackType="group" className="h-24 w-24" />
             )}
             {/* Edit badge */}
-            <span className="absolute bottom-0.5 right-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-sm shadow-md">
-              ✎
+            <span className="absolute bottom-0.5 right-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-accent)] text-white shadow-md">
+              <Camera size={14} />
             </span>
           </button>
           <input
@@ -264,12 +257,12 @@ export function GroupSettingsModal({
             className="hidden"
             onChange={handleAvatarPick}
           />
-          <p className="mt-2 text-xs text-gray-600">Tap to set a photo</p>
+          <p className="mt-2 text-xs text-[var(--color-text-muted)]">Tap to set a photo</p>
         </div>
 
         {/* ── Group Name ─────────────────────────────────────────────────── */}
-        <section className="border-b border-gray-800 px-4 pb-5">
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray-500">
+        <section className="border-b border-[var(--color-border-primary)] px-4 pb-5">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
             Group Name
           </label>
           <input
@@ -278,13 +271,13 @@ export function GroupSettingsModal({
             onChange={(e) => setName(e.target.value)}
             placeholder="Name this group…"
             autoFocus
-            className="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-white placeholder-gray-600 focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-xl border border-[var(--color-border-secondary)] bg-[var(--color-bg-tertiary)] px-4 py-3 text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:ring-2 focus:ring-[var(--color-accent)] focus:outline-none"
           />
         </section>
 
         {/* ── Members ────────────────────────────────────────────────────── */}
         <section className="px-4 pt-5 pb-8">
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
             {mode === "create" ? "Add Members" : "Invite Members"}
           </label>
 
@@ -295,38 +288,38 @@ export function GroupSettingsModal({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by handle…"
-              className="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-white placeholder-gray-600 focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-xl border border-[var(--color-border-secondary)] bg-[var(--color-bg-tertiary)] px-4 py-3 text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:ring-2 focus:ring-[var(--color-accent)] focus:outline-none"
             />
             {searchLoading && (
-              <span className="absolute right-3 top-3.5 text-gray-500">
-                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-t-transparent" />
+              <span className="absolute right-3 top-3.5 text-[var(--color-text-muted)]">
+                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-text-muted)] border-t-transparent" />
               </span>
             )}
           </div>
 
           {/* Search results */}
           {searchResults.length > 0 && (
-            <div className="mt-2 overflow-hidden rounded-xl border border-gray-700">
+            <div className="mt-2 overflow-hidden rounded-xl border border-[var(--color-border-secondary)]">
               {searchResults.map((actor, i) => (
                 <button
                   key={actor.did}
                   onClick={() => handleAddMember(actor)}
-                  className={`flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-900 active:bg-gray-800 ${
+                  className={`flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[var(--color-bg-hover)] active:bg-[var(--color-bg-active)] ${
                     i < searchResults.length - 1
-                      ? "border-b border-gray-800"
+                      ? "border-b border-[var(--color-border-primary)]"
                       : ""
                   }`}
                 >
-                  <ActorAvatar actor={actor} size={36} />
+                  <Avatar src={actor.avatar} alt={actor.handle} size="sm" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-white">
+                    <p className="truncate text-sm font-medium text-[var(--color-text-primary)]">
                       {actor.displayName ?? actor.handle}
                     </p>
-                    <p className="truncate text-xs text-gray-500">
+                    <p className="truncate text-xs text-[var(--color-text-tertiary)]">
                       @{actor.handle}
                     </p>
                   </div>
-                  <span className="flex-shrink-0 text-sm text-blue-500">
+                  <span className="flex-shrink-0 text-sm text-[var(--color-accent)]">
                     + Add
                   </span>
                 </button>
@@ -337,30 +330,30 @@ export function GroupSettingsModal({
           {/* Pending members (queued to be added) */}
           {pendingMembers.length > 0 && (
             <div className="mt-5">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
                 {mode === "create" ? "Members" : "Will Be Added"}
               </p>
               <ul className="space-y-2">
                 {pendingMembers.map((m) => (
                   <li
                     key={m.did}
-                    className="flex items-center gap-3 rounded-xl border border-gray-700 bg-gray-900 px-4 py-3"
+                    className="flex items-center gap-3 rounded-xl border border-[var(--color-border-secondary)] bg-[var(--color-bg-tertiary)] px-4 py-3"
                   >
-                    <ActorAvatar actor={m} size={36} />
+                    <Avatar src={m.avatar} alt={m.handle} size="sm" />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-white">
+                      <p className="truncate text-sm font-medium text-[var(--color-text-primary)]">
                         {m.displayName ?? m.handle}
                       </p>
-                      <p className="truncate text-xs text-gray-500">
+                      <p className="truncate text-xs text-[var(--color-text-tertiary)]">
                         @{m.handle}
                       </p>
                     </div>
                     <button
                       onClick={() => handleRemovePending(m.did)}
                       aria-label="Remove"
-                      className="flex-shrink-0 text-gray-600 hover:text-red-400"
+                      className="flex-shrink-0 text-[var(--color-text-muted)] transition hover:text-[var(--color-danger)]"
                     >
-                      ✕
+                      <X size={16} />
                     </button>
                   </li>
                 ))}
@@ -371,26 +364,26 @@ export function GroupSettingsModal({
           {/* Existing members (edit mode only) */}
           {mode === "edit" && existingMembers.length > 0 && (
             <div className="mt-5">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
                 Current Members · {existingMembers.length}
               </p>
               <ul className="space-y-2">
                 {existingMembers.map((m) => (
                   <li
                     key={m.did}
-                    className="flex items-center gap-3 rounded-xl border border-gray-700 bg-gray-900 px-4 py-3"
+                    className="flex items-center gap-3 rounded-xl border border-[var(--color-border-secondary)] bg-[var(--color-bg-tertiary)] px-4 py-3"
                   >
-                    <ActorAvatar actor={m} size={36} />
+                    <Avatar src={m.avatar} alt={m.handle} size="sm" />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-white">
+                      <p className="truncate text-sm font-medium text-[var(--color-text-primary)]">
                         {m.displayName ?? m.handle}
                       </p>
-                      <p className="truncate text-xs text-gray-500">
+                      <p className="truncate text-xs text-[var(--color-text-tertiary)]">
                         @{m.handle}
                       </p>
                     </div>
                     {m.did === session.did && (
-                      <span className="flex-shrink-0 text-xs text-gray-600">
+                      <span className="flex-shrink-0 text-xs text-[var(--color-text-muted)]">
                         You
                       </span>
                     )}
@@ -402,32 +395,9 @@ export function GroupSettingsModal({
         </section>
 
         {error && (
-          <p className="px-4 pb-4 text-center text-sm text-red-400">{error}</p>
+          <p className="px-4 pb-4 text-center text-sm text-[var(--color-danger)]">{error}</p>
         )}
       </div>
-    </div>
-  );
-}
-
-// ── Small avatar helper ───────────────────────────────────────────────────────
-function ActorAvatar({ actor, size }: { actor: BskyActor; size: number }) {
-  if (actor.avatar) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={actor.avatar}
-        alt={actor.handle}
-        className="flex-shrink-0 rounded-full object-cover"
-        style={{ width: size, height: size }}
-      />
-    );
-  }
-  return (
-    <div
-      className="flex flex-shrink-0 items-center justify-center rounded-full bg-gray-800 text-base"
-      style={{ width: size, height: size }}
-    >
-      👤
     </div>
   );
 }

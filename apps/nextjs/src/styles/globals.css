@@ -1,10 +1,221 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+/* ── Default Theme ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Backgrounds */
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #030712;
+  --color-bg-tertiary: #111827;
+  --color-bg-elevated: #111827;
+  --color-bg-hover: rgba(17, 24, 39, 0.3);
+  --color-bg-active: rgba(17, 24, 39, 0.5);
+
+  /* Borders */
+  --color-border-primary: #1f2937;
+  --color-border-secondary: #374151;
+
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #9ca3af;
+  --color-text-tertiary: #6b7280;
+  --color-text-muted: #4b5563;
+  --color-text-placeholder: #4b5563;
+
+  /* Accent */
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-accent-muted: rgba(30, 58, 138, 0.4);
+  --color-accent-text: #60a5fa;
+
+  /* Semantic */
+  --color-danger: #f87171;
+  --color-danger-bg: rgba(127, 29, 29, 0.5);
+  --color-like: #ef4444;
+  --color-like-bg: rgba(127, 29, 29, 0.4);
+  --color-repost: #22c55e;
+  --color-repost-bg: rgba(5, 46, 22, 0.4);
+
+  /* Notification reason colors */
+  --color-notif-like: #ef4444;
+  --color-notif-like-bg: rgba(239, 68, 68, 0.2);
+  --color-notif-repost: #22c55e;
+  --color-notif-repost-bg: rgba(34, 197, 94, 0.2);
+  --color-notif-follow: #3b82f6;
+  --color-notif-follow-bg: rgba(59, 130, 246, 0.2);
+  --color-notif-mention: #a855f7;
+  --color-notif-mention-bg: rgba(168, 85, 247, 0.2);
+  --color-notif-reply: #3b82f6;
+  --color-notif-reply-bg: rgba(59, 130, 246, 0.2);
+  --color-notif-quote: #f59e0b;
+  --color-notif-quote-bg: rgba(245, 158, 11, 0.2);
+
+  /* Navigation */
+  --nav-bg: #000000;
+  --nav-border: #1f2937;
+  --nav-icon-inactive: #4b5563;
+  --nav-icon-active: #ffffff;
+
+  /* Effects */
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-glow: none;
+
+  /* Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: var(--font-inter), system-ui, sans-serif;
+
+  /* Avatar fallback */
+  --avatar-fallback-from: #374151;
+  --avatar-fallback-to: #1f2937;
+}
+
+/* ── Space Aliens Theme (Retro Sci-Fi) ────────────────────────────────────────── */
+
+[data-theme="space-aliens"] {
+  /* Backgrounds - deep space blue-black */
+  --color-bg-primary: #050a12;
+  --color-bg-secondary: #0a1628;
+  --color-bg-tertiary: #0f1d30;
+  --color-bg-elevated: #0f1d30;
+  --color-bg-hover: rgba(15, 29, 48, 0.5);
+  --color-bg-active: rgba(15, 29, 48, 0.7);
+
+  /* Borders - dark alien green */
+  --color-border-primary: #1a3a2a;
+  --color-border-secondary: #2a5a3a;
+
+  /* Text - slightly green-tinted */
+  --color-text-primary: #d4f0d4;
+  --color-text-secondary: #8bb88b;
+  --color-text-tertiary: #5a8a5a;
+  --color-text-muted: #3a6a3a;
+  --color-text-placeholder: #3a6a3a;
+
+  /* Accent - alien green */
+  --color-accent: #22c55e;
+  --color-accent-hover: #16a34a;
+  --color-accent-muted: rgba(34, 197, 94, 0.15);
+  --color-accent-text: #4ade80;
+
+  /* Semantic */
+  --color-danger: #f87171;
+  --color-danger-bg: rgba(127, 29, 29, 0.5);
+  --color-like: #f472b6;
+  --color-like-bg: rgba(244, 114, 182, 0.2);
+  --color-repost: #22c55e;
+  --color-repost-bg: rgba(34, 197, 94, 0.2);
+
+  /* Notification reason colors - alien palette */
+  --color-notif-like: #f472b6;
+  --color-notif-like-bg: rgba(244, 114, 182, 0.2);
+  --color-notif-repost: #22c55e;
+  --color-notif-repost-bg: rgba(34, 197, 94, 0.2);
+  --color-notif-follow: #4ade80;
+  --color-notif-follow-bg: rgba(74, 222, 128, 0.2);
+  --color-notif-mention: #a78bfa;
+  --color-notif-mention-bg: rgba(167, 139, 250, 0.2);
+  --color-notif-reply: #4ade80;
+  --color-notif-reply-bg: rgba(74, 222, 128, 0.2);
+  --color-notif-quote: #fbbf24;
+  --color-notif-quote-bg: rgba(251, 191, 36, 0.2);
+
+  /* Navigation */
+  --nav-bg: #050a12;
+  --nav-border: #1a3a2a;
+  --nav-icon-inactive: #3a6a3a;
+  --nav-icon-active: #22c55e;
+
+  /* Effects */
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 8px rgba(34, 197, 94, 0.3);
+
+  /* Typography */
+  --font-display: var(--font-orbitron), var(--font-inter), system-ui, sans-serif;
+
+  /* Avatar fallback */
+  --avatar-fallback-from: #1a3a2a;
+  --avatar-fallback-to: #2a1a3a;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────────────────────── */
+
 body {
   word-break: break-word;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 /* iOS safe-area utilities for notch / Dynamic Island / home indicator */
 .pt-safe { padding-top: env(safe-area-inset-top); }
 .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
+/* ── Animations ───────────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes starField {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-tertiary) 25%,
+    var(--color-bg-elevated) 50%,
+    var(--color-bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Space Aliens Theme Enhancements ──────────────────────────────────────────── */
+
+[data-theme="space-aliens"] button:focus-visible {
+  box-shadow: var(--shadow-glow);
+}
+
+[data-theme="space-aliens"] .nav-item-active {
+  filter: drop-shadow(0 0 6px var(--color-accent));
+}
+
+/* Retro star field background for login */
+[data-theme="space-aliens"] .login-bg {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(34, 197, 94, 0.6), transparent),
+    radial-gradient(1px 1px at 30% 60%, rgba(74, 222, 128, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(167, 139, 250, 0.5), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(34, 197, 94, 0.6), transparent),
+    radial-gradient(1px 1px at 90% 80%, rgba(74, 222, 128, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 20% 90%, rgba(167, 139, 250, 0.4), transparent),
+    radial-gradient(1px 1px at 60% 70%, rgba(34, 197, 94, 0.5), transparent),
+    radial-gradient(1px 1px at 80% 15%, rgba(74, 222, 128, 0.4), transparent),
+    radial-gradient(1px 1px at 40% 35%, rgba(167, 139, 250, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 15% 55%, rgba(34, 197, 94, 0.4), transparent);
+}
+
+/* Heading font for aliens theme */
+[data-theme="space-aliens"] .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
