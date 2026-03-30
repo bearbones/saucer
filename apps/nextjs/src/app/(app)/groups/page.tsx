@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ChevronRight, MessageSquare, Plus } from "lucide-react";
 
+import { Avatar } from "~/components/avatar";
 import { GroupSettingsModal } from "~/components/group-settings-modal";
 import { useAuth } from "~/lib/auth-context";
 import { subscribeToGroups, type Group } from "~/lib/groups";
@@ -31,12 +33,12 @@ export default function GroupsPage() {
         {/* Group list */}
         <div className="flex-1 overflow-y-auto">
           {sorted.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 text-gray-600">
-              <span className="mb-3 text-5xl">💬</span>
+            <div className="flex flex-col items-center justify-center py-20 text-[var(--color-text-muted)]">
+              <MessageSquare size={48} className="mb-3" />
               <p className="text-sm">No groups yet.</p>
               <p className="text-sm">
                 Tap{" "}
-                <span className="font-semibold text-blue-500">+</span> to
+                <span className="font-semibold text-[var(--color-accent)]">+</span> to
                 create one.
               </p>
             </div>
@@ -55,9 +57,9 @@ export default function GroupsPage() {
         <button
           onClick={() => setShowCreate(true)}
           aria-label="Create group"
-          className="absolute bottom-5 right-5 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-2xl text-white shadow-lg transition hover:bg-blue-600 active:scale-95"
+          className="absolute bottom-5 right-5 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-accent)] text-white shadow-[var(--shadow-elevated)] transition hover:bg-[var(--color-accent-hover)] active:scale-95"
         >
-          +
+          <Plus size={24} />
         </button>
       </div>
 
@@ -82,33 +84,22 @@ function GroupRow({
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center gap-3 border-b border-gray-800 px-4 py-3 text-left transition hover:bg-gray-900 active:bg-gray-800"
+      className="flex w-full items-center gap-3 border-b border-[var(--color-border-primary)] px-4 py-3 text-left transition hover:bg-[var(--color-bg-hover)] active:bg-[var(--color-bg-active)]"
     >
       {/* Avatar */}
-      {group.avatarUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={group.avatarUrl}
-          alt={group.name}
-          className="h-12 w-12 flex-shrink-0 rounded-full object-cover"
-        />
-      ) : (
-        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-950 text-2xl">
-          👥
-        </div>
-      )}
+      <Avatar src={group.avatarUrl} alt={group.name} size="lg" fallbackType="group" />
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold text-white">{group.name}</p>
+        <p className="truncate font-semibold text-[var(--color-text-primary)]">{group.name}</p>
         {group.lastMessage && (
-          <p className="truncate text-sm text-gray-500">
+          <p className="truncate text-sm text-[var(--color-text-muted)]">
             {group.lastMessage}
           </p>
         )}
       </div>
 
-      <span className="flex-shrink-0 text-gray-700">›</span>
+      <ChevronRight size={16} className="flex-shrink-0 text-[var(--color-text-muted)]" />
     </button>
   );
 }

@@ -7,12 +7,11 @@ import { ArrowLeft } from "lucide-react";
 import { AppBskyFeedDefs } from "@atproto/api";
 
 import { PostCard } from "~/components/post-card";
+import { SkeletonPostCard } from "~/components/skeleton";
 import { useAuth } from "~/lib/auth-context";
 
 export default function ThreadPage() {
   const { agent } = useAuth();
-  // Next.js automatically URL-decodes dynamic segment values,
-  // so params.did arrives as "did:plc:xxx" even if the URL has "did%3Aplc%3Axxx".
   const params = useParams<{ did: string; rkey: string }>();
   const router = useRouter();
 
@@ -82,27 +81,29 @@ export default function ThreadPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex flex-shrink-0 items-center gap-3 border-b border-gray-800 px-4 py-3">
+      <header className="flex flex-shrink-0 items-center gap-3 border-b border-[var(--color-border-primary)] px-4 py-3">
         <button
           onClick={() => router.back()}
-          className="flex-shrink-0 text-gray-400 hover:text-white"
+          className="flex-shrink-0 text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)]"
         >
           <ArrowLeft size={20} />
         </button>
-        <h1 className="text-lg font-bold">Post</h1>
+        <h1 className="text-lg font-bold text-[var(--color-text-primary)]">Post</h1>
       </header>
 
       <div className="flex-1 overflow-y-auto">
         {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div>
+            <SkeletonPostCard />
+            <SkeletonPostCard />
+            <SkeletonPostCard />
           </div>
         ) : error ? (
           <div className="flex flex-col items-center px-4 py-16 text-center">
-            <p className="mb-3 text-sm text-gray-500">{error}</p>
+            <p className="mb-3 text-sm text-[var(--color-text-tertiary)]">{error}</p>
             <button
               onClick={() => void load()}
-              className="rounded-xl bg-blue-500 px-4 py-2 text-sm text-white"
+              className="rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm text-white transition hover:bg-[var(--color-accent-hover)]"
             >
               Try again
             </button>
@@ -127,8 +128,8 @@ export default function ThreadPage() {
             )}
 
             {replies.length > 0 && (
-              <div className="border-t border-gray-800">
-                <p className="px-4 pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-gray-600">
+              <div className="border-t border-[var(--color-border-primary)]">
+                <p className="px-4 pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
                   Replies
                 </p>
                 {replies.map((post) => (
@@ -141,7 +142,7 @@ export default function ThreadPage() {
             )}
 
             {replies.length === 0 && mainPost && (
-              <p className="py-10 text-center text-sm text-gray-600">
+              <p className="py-10 text-center text-sm text-[var(--color-text-muted)]">
                 No replies yet
               </p>
             )}

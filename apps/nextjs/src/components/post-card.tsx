@@ -11,6 +11,7 @@ import {
   AppBskyFeedPost,
 } from "@atproto/api";
 
+import { Avatar } from "~/components/avatar";
 import { useAuth } from "~/lib/auth-context";
 import { useLike, useRepost } from "~/lib/hooks/use-post-actions";
 
@@ -42,12 +43,9 @@ function fmtCount(n?: number): string {
 
 /** Build the /thread/[did]/[rkey] href for any AT-URI post. */
 function threadHref(postUri: string): string {
-  // at://did:plc:xxx/app.bsky.feed.post/rkey
   const parts = postUri.split("/");
   const did = parts[2] ?? "";
   const rkey = parts[4] ?? "";
-  // encodeURIComponent the DID so colons don't confuse any URL parser.
-  // Next.js automatically decodes path params, so params.did == "did:plc:xxx".
   return `/thread/${encodeURIComponent(did)}/${rkey}`;
 }
 
@@ -101,7 +99,7 @@ function ExternalEmbed({ embed }: { embed: AppBskyEmbedExternal.View }) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => e.stopPropagation()}
-      className="mt-2 flex overflow-hidden rounded-xl border border-gray-800 hover:border-gray-600"
+      className="mt-2 flex overflow-hidden rounded-xl border border-[var(--color-border-primary)] transition hover:border-[var(--color-border-secondary)]"
     >
       {external.thumb && (
         // eslint-disable-next-line @next/next/no-img-element
@@ -112,12 +110,12 @@ function ExternalEmbed({ embed }: { embed: AppBskyEmbedExternal.View }) {
         />
       )}
       <div className="min-w-0 flex-1 p-3">
-        <p className="truncate text-xs text-gray-500">{domain}</p>
-        <p className="mt-0.5 line-clamp-2 text-sm font-medium text-white">
+        <p className="truncate text-xs text-[var(--color-text-tertiary)]">{domain}</p>
+        <p className="mt-0.5 line-clamp-2 text-sm font-medium text-[var(--color-text-primary)]">
           {external.title}
         </p>
         {external.description && (
-          <p className="mt-0.5 line-clamp-1 text-xs text-gray-500">
+          <p className="mt-0.5 line-clamp-1 text-xs text-[var(--color-text-tertiary)]">
             {external.description}
           </p>
         )}
@@ -137,24 +135,17 @@ function QuoteEmbed({ embed }: { embed: AppBskyEmbedRecord.View }) {
 
   return (
     <div
-      className="mt-2 rounded-xl border border-gray-800 p-3"
+      className="mt-2 rounded-xl border border-[var(--color-border-primary)] p-3"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="mb-1 flex items-center gap-2">
-        {author.avatar && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={author.avatar}
-            alt={author.handle}
-            className="h-4 w-4 rounded-full object-cover"
-          />
-        )}
-        <span className="text-xs font-semibold text-white">
+        <Avatar src={author.avatar} alt={author.handle} size="xs" className="h-4 w-4" />
+        <span className="text-xs font-semibold text-[var(--color-text-primary)]">
           {author.displayName ?? author.handle}
         </span>
-        <span className="text-xs text-gray-500">@{author.handle}</span>
+        <span className="text-xs text-[var(--color-text-tertiary)]">@{author.handle}</span>
       </div>
-      <p className="line-clamp-3 text-sm text-gray-300">{text}</p>
+      <p className="line-clamp-3 text-sm text-[var(--color-text-secondary)]">{text}</p>
     </div>
   );
 }
@@ -180,14 +171,14 @@ function PostActionRow({ post }: { post: AppBskyFeedDefs.PostView }) {
   const router = useRouter();
 
   return (
-    <div className="mt-3 flex justify-between text-sm text-gray-500">
+    <div className="mt-3 flex justify-between text-sm text-[var(--color-text-tertiary)]">
       {/* Reply */}
       <button
         onClick={(e) => {
           e.stopPropagation();
           router.push(threadHref(post.uri));
         }}
-        className="flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors hover:bg-blue-950/40 hover:text-blue-400"
+        className="flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors hover:bg-[var(--color-accent-muted)] hover:text-[var(--color-accent-text)] active:scale-[0.97]"
       >
         <MessageCircle size={18} />
         <span>{fmtCount(post.replyCount)}</span>
@@ -199,10 +190,10 @@ function PostActionRow({ post }: { post: AppBskyFeedDefs.PostView }) {
           e.stopPropagation();
           void toggleRepost();
         }}
-        className={`flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors ${
+        className={`flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors active:scale-[0.97] ${
           reposted
-            ? "text-green-500"
-            : "hover:bg-green-950/40 hover:text-green-400"
+            ? "text-[var(--color-repost)]"
+            : "hover:bg-[var(--color-repost-bg)] hover:text-[var(--color-repost)]"
         }`}
       >
         <Repeat2 size={20} />
@@ -215,8 +206,8 @@ function PostActionRow({ post }: { post: AppBskyFeedDefs.PostView }) {
           e.stopPropagation();
           void toggleLike();
         }}
-        className={`flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors ${
-          liked ? "text-red-500" : "hover:bg-red-950/40 hover:text-red-400"
+        className={`flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors active:scale-[0.97] ${
+          liked ? "text-[var(--color-like)]" : "hover:bg-[var(--color-like-bg)] hover:text-[var(--color-like)]"
         }`}
       >
         <Heart size={18} fill={liked ? "currentColor" : "none"} />
@@ -260,18 +251,18 @@ export function PostCard({
 
   return (
     <article
-      className={`px-4 pt-3 ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
+      className={`px-4 pt-3 ${hasReply ? "pb-0" : "border-b border-[var(--color-border-primary)] pb-3"} ${
         primary
-          ? "border-l-2 border-l-blue-500 bg-gray-950"
+          ? "border-l-2 border-l-[var(--color-accent)] bg-[var(--color-bg-secondary)]"
           : disableNavigation
             ? ""
-            : "cursor-pointer transition-colors hover:bg-gray-900/30 active:bg-gray-900/50"
+            : "cursor-pointer transition-colors hover:bg-[var(--color-bg-hover)] active:bg-[var(--color-bg-active)]"
       }`}
       onClick={handleClick}
     >
       {/* Repost banner */}
       {isRepost && AppBskyFeedDefs.isReasonRepost(reason) && (
-        <p className="mb-1.5 flex items-center gap-1.5 text-xs text-gray-500">
+        <p className="mb-1.5 flex items-center gap-1.5 text-xs text-[var(--color-text-tertiary)]">
           <Repeat2 size={12} />
           <span>
             Reposted by {reason.by.displayName ?? reason.by.handle}
@@ -282,43 +273,30 @@ export function PostCard({
       <div className="flex gap-3">
         {/* Avatar column with optional thread line */}
         <div className="flex flex-col items-center">
-          {author.avatar ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={author.avatar}
-              alt={author.handle}
-              className={`flex-shrink-0 rounded-full object-cover ${
-                primary ? "h-12 w-12" : "h-10 w-10"
-              }`}
-            />
-          ) : (
-            <div
-              className={`flex flex-shrink-0 items-center justify-center rounded-full bg-gray-800 text-sm ${
-                primary ? "h-12 w-12" : "h-10 w-10"
-              }`}
-            >
-              👤
-            </div>
-          )}
+          <Avatar
+            src={author.avatar}
+            alt={author.handle}
+            size={primary ? "lg" : "md"}
+          />
           {/* Thread line */}
-          {hasReply && <div className="mt-1 w-0.5 flex-1 bg-gray-700" />}
+          {hasReply && <div className="mt-1 w-0.5 flex-1 bg-[var(--color-border-secondary)]" />}
         </div>
 
         <div className="min-w-0 flex-1">
           {/* Author + timestamp */}
           <div className="flex items-baseline gap-1.5">
             <span
-              className={`truncate font-semibold text-white ${
+              className={`truncate font-semibold text-[var(--color-text-primary)] ${
                 primary ? "text-base" : "text-sm"
               }`}
             >
               {author.displayName ?? author.handle}
             </span>
-            <span className="flex-shrink-0 text-xs text-gray-500">
+            <span className="flex-shrink-0 text-xs text-[var(--color-text-tertiary)]">
               @{author.handle}
             </span>
             {!primary && (
-              <span className="flex-shrink-0 text-xs text-gray-600">
+              <span className="flex-shrink-0 text-xs text-[var(--color-text-muted)]">
                 · {timeAgo(post.indexedAt)}
               </span>
             )}
@@ -327,7 +305,7 @@ export function PostCard({
           {/* Post text */}
           {record.text && (
             <p
-              className={`mt-1 whitespace-pre-wrap break-words text-gray-100 ${
+              className={`mt-1 whitespace-pre-wrap break-words text-[var(--color-text-secondary)] ${
                 primary ? "text-base" : "text-sm"
               }`}
             >
@@ -340,7 +318,7 @@ export function PostCard({
 
           {/* Full timestamp for primary post */}
           {primary && (
-            <p className="mt-3 text-xs text-gray-500">
+            <p className="mt-3 text-xs text-[var(--color-text-tertiary)]">
               {fullDate(post.indexedAt)}
             </p>
           )}
