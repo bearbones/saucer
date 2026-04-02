@@ -238,6 +238,8 @@ interface PostCardProps {
   hideActions?: boolean;
   /** Don't navigate on click */
   disableNavigation?: boolean;
+  /** Show "replying to @handle" context above the post text */
+  replyTo?: string;
 }
 
 export function PostCard({
@@ -246,6 +248,7 @@ export function PostCard({
   hasReply = false,
   hideActions = false,
   disableNavigation = false,
+  replyTo,
 }: PostCardProps) {
   const { post, reason } = item;
   const author = post.author;
@@ -262,7 +265,7 @@ export function PostCard({
     <article
       className={`px-4 pt-3 ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
         primary
-          ? "border-l-2 border-l-blue-500 bg-gray-950"
+          ? "bg-gray-950/60"
           : disableNavigation
             ? ""
             : "cursor-pointer transition-colors hover:bg-gray-900/30 active:bg-gray-900/50"
@@ -324,6 +327,14 @@ export function PostCard({
             )}
           </div>
 
+          {/* Replying to context */}
+          {replyTo && (
+            <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500">
+              <MessageCircle size={12} />
+              replying to {replyTo}
+            </p>
+          )}
+
           {/* Post text */}
           {record.text && (
             <p
@@ -338,11 +349,41 @@ export function PostCard({
           {/* Embedded media */}
           <PostEmbed post={post} />
 
-          {/* Full timestamp for primary post */}
+          {/* Full timestamp + engagement stats for primary post */}
           {primary && (
-            <p className="mt-3 text-xs text-gray-500">
-              {fullDate(post.indexedAt)}
-            </p>
+            <>
+              <p className="mt-3 text-xs text-gray-500">
+                {fullDate(post.indexedAt)}
+              </p>
+              {!!(post.replyCount || post.repostCount || post.likeCount) && (
+                <div className="mt-2 flex gap-4 border-t border-gray-800 pt-2 text-sm">
+                  {!!post.replyCount && (
+                    <span className="text-gray-400">
+                      <span className="font-semibold text-white">
+                        {fmtCount(post.replyCount)}
+                      </span>{" "}
+                      {post.replyCount === 1 ? "reply" : "replies"}
+                    </span>
+                  )}
+                  {!!post.repostCount && (
+                    <span className="text-gray-400">
+                      <span className="font-semibold text-white">
+                        {fmtCount(post.repostCount)}
+                      </span>{" "}
+                      reposts
+                    </span>
+                  )}
+                  {!!post.likeCount && (
+                    <span className="text-gray-400">
+                      <span className="font-semibold text-white">
+                        {fmtCount(post.likeCount)}
+                      </span>{" "}
+                      {post.likeCount === 1 ? "like" : "likes"}
+                    </span>
+                  )}
+                </div>
+              )}
+            </>
           )}
 
           {/* Action row */}
