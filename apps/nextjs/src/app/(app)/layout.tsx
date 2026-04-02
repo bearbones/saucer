@@ -115,8 +115,10 @@ function BottomNav({ visible }: { visible: boolean }) {
   const pathname = usePathname();
   return (
     <nav
-      className={`pb-safe flex flex-shrink-0 border-t border-gray-800 bg-black transition-transform duration-300 ${
-        visible ? "translate-y-0" : "translate-y-full"
+      className={`pb-safe flex flex-shrink-0 bg-black transition-all duration-300 ${
+        visible
+          ? "max-h-20 border-t border-gray-800"
+          : "max-h-0 overflow-hidden border-t-0"
       }`}
     >
       {TABS.map((tab) => {
