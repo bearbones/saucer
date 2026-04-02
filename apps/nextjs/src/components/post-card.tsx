@@ -240,6 +240,8 @@ interface PostCardProps {
   disableNavigation?: boolean;
   /** Show "replying to @handle" context above the post text */
   replyTo?: string;
+  /** This post is a reply following a parent (remove top padding for thread continuity) */
+  isReply?: boolean;
 }
 
 export function PostCard({
@@ -249,6 +251,7 @@ export function PostCard({
   hideActions = false,
   disableNavigation = false,
   replyTo,
+  isReply = false,
 }: PostCardProps) {
   const { post, reason } = item;
   const author = post.author;
@@ -263,7 +266,7 @@ export function PostCard({
 
   return (
     <article
-      className={`px-4 pt-3 ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
+      className={`px-4 ${isReply ? "pt-0" : "pt-3"} ${hasReply ? "pb-0" : "border-b border-gray-800 pb-3"} ${
         primary
           ? "bg-gray-950/60"
           : disableNavigation
@@ -304,20 +307,20 @@ export function PostCard({
             </div>
           )}
           {/* Thread line */}
-          {hasReply && <div className="mt-1 w-0.5 flex-1 bg-gray-700" />}
+          {hasReply && <div className="mt-0.5 w-0.5 flex-1 bg-gray-700" />}
         </div>
 
         <div className="min-w-0 flex-1">
           {/* Author + timestamp */}
           <div className="flex items-baseline gap-1.5">
             <span
-              className={`truncate font-semibold text-white ${
-                primary ? "text-base" : "text-sm"
+              className={`flex-shrink-0 font-semibold text-white ${
+                primary ? "text-base" : "text-[15px]"
               }`}
             >
               {author.displayName ?? author.handle}
             </span>
-            <span className="flex-shrink-0 text-xs text-gray-500">
+            <span className="min-w-0 truncate text-[15px] text-gray-500">
               @{author.handle}
             </span>
             {!primary && (
@@ -339,7 +342,7 @@ export function PostCard({
           {record.text && (
             <p
               className={`mt-1 whitespace-pre-wrap break-words text-gray-100 ${
-                primary ? "text-base" : "text-sm"
+                primary ? "text-base" : "text-[15px]"
               }`}
             >
               {record.text}

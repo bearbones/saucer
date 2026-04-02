@@ -160,7 +160,7 @@ export default function FeedTimelinePage() {
                       hideActions
                     />
                   )}
-                  <PostCard item={item} />
+                  <PostCard item={item} isReply={!!replyParent} />
                 </div>
               );
             })}

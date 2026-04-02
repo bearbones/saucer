@@ -113,6 +113,7 @@ export default function ThreadPage() {
                 key={post.uri}
                 item={{ post } as AppBskyFeedDefs.FeedViewPost}
                 hasReply={i < ancestors.length - 1 || !!mainPost}
+                isReply={i > 0}
                 replyTo={
                   i > 0
                     ? (ancestors[i - 1]!.author.displayName ??
@@ -128,6 +129,7 @@ export default function ThreadPage() {
                 primary
                 disableNavigation
                 hasReply={replies.length > 0}
+                isReply={ancestors.length > 0}
                 replyTo={
                   ancestors.length > 0
                     ? (ancestors[ancestors.length - 1]!.author.displayName ??
