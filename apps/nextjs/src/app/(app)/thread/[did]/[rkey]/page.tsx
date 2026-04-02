@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 
 import { AppBskyFeedDefs } from "@atproto/api";
 
@@ -11,16 +11,15 @@ import { useAuth } from "~/lib/auth-context";
 
 export default function ThreadPage() {
   const { agent } = useAuth();
-  // Next.js automatically URL-decodes dynamic segment values,
-  // so params.did arrives as "did:plc:xxx" even if the URL has "did%3Aplc%3Axxx".
   const params = useParams<{ did: string; rkey: string }>();
   const router = useRouter();
 
-  const postUri = `at://${params.did}/app.bsky.feed.post/${params.rkey}`;
+  // Explicitly decode the DID — Next.js 16 may not auto-decode dynamic segments.
+  const postUri = `at://${decodeURIComponent(params.did)}/app.bsky.feed.post/${params.rkey}`;
 
   const [ancestors, setAncestors] = useState<AppBskyFeedDefs.PostView[]>([]);
   const [mainPost, setMainPost] = useState<AppBskyFeedDefs.PostView | null>(null);
-  const [replies, setReplies] = useState<AppBskyFeedDefs.PostView[]>([]);
+  const [replies, setReplies] = useState<{ post: AppBskyFeedDefs.PostView; depth: number }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,8 +48,8 @@ export default function ThreadPage() {
         cur = cur.parent;
       }
 
-      // Flatten replies depth-first
-      const replyPosts: AppBskyFeedDefs.PostView[] = [];
+      // Flatten replies depth-first, tracking nesting depth
+      const replyPosts: { post: AppBskyFeedDefs.PostView; depth: number }[] = [];
       function collectReplies(
         items: typeof thread.replies,
         depth: number,
@@ -58,7 +57,7 @@ export default function ThreadPage() {
         if (!items || depth > 6) return;
         for (const reply of items) {
           if (AppBskyFeedDefs.isThreadViewPost(reply)) {
-            replyPosts.push(reply.post);
+            replyPosts.push({ post: reply.post, depth });
             if (reply.replies?.length) collectReplies(reply.replies, depth + 1);
           }
         }
@@ -114,6 +113,12 @@ export default function ThreadPage() {
                 key={post.uri}
                 item={{ post } as AppBskyFeedDefs.FeedViewPost}
                 hasReply={i < ancestors.length - 1 || !!mainPost}
+                replyTo={
+                  i > 0
+                    ? (ancestors[i - 1]!.author.displayName ??
+                      `@${ancestors[i - 1]!.author.handle}`)
+                    : undefined
+                }
               />
             ))}
 
@@ -123,19 +128,32 @@ export default function ThreadPage() {
                 primary
                 disableNavigation
                 hasReply={replies.length > 0}
+                replyTo={
+                  ancestors.length > 0
+                    ? (ancestors[ancestors.length - 1]!.author.displayName ??
+                      `@${ancestors[ancestors.length - 1]!.author.handle}`)
+                    : undefined
+                }
               />
             )}
 
             {replies.length > 0 && (
               <div className="border-t border-gray-800">
-                <p className="px-4 pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-gray-600">
-                  Replies
-                </p>
-                {replies.map((post) => (
-                  <PostCard
+                <div className="flex items-center gap-2 px-4 py-3">
+                  <MessageCircle size={14} className="text-gray-500" />
+                  <span className="text-sm text-gray-500">
+                    {replies.length} {replies.length === 1 ? "reply" : "replies"}
+                  </span>
+                </div>
+                {replies.map(({ post, depth }) => (
+                  <div
                     key={post.uri}
-                    item={{ post } as AppBskyFeedDefs.FeedViewPost}
-                  />
+                    style={{ marginLeft: Math.min(depth, 3) * 16 }}
+                  >
+                    <PostCard
+                      item={{ post } as AppBskyFeedDefs.FeedViewPost}
+                    />
+                  </div>
                 ))}
               </div>
             )}

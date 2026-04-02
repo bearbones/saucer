@@ -45,7 +45,7 @@ export default function ShareAsImageScreen() {
     queryKey: ["profile", author, "post", rkey, "no-context"],
     queryFn: async () => {
       if (!author || !rkey) throw new Error("Invalid author or post");
-      let did = author;
+      let did = decodeURIComponent(author);
       if (!did.startsWith("did:")) {
         const { data } = await agent.resolveHandle({ handle: author });
         did = data.did;

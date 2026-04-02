@@ -72,7 +72,7 @@ const PostThread = ({ contentFilter }: Props) => {
     queryKey: ["profile", author, "post", post],
     queryFn: async () => {
       if (!author || !post) throw Error("Invalid path to post");
-      let did = author;
+      let did = decodeURIComponent(author);
       if (!did.startsWith("did:")) {
         const { data } = await agent.resolveHandle({ handle: author });
         did = data.did;
