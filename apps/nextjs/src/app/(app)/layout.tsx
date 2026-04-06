@@ -69,18 +69,18 @@ const TABS: { label: string; icon: React.ReactNode; href: string }[] = [
     href: "/groups",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
-        {/* Left alien head */}
-        <ellipse cx="6.5" cy="13" rx="3.2" ry="4.5" />
-        <circle cx="5.5" cy="12.5" r="0.7" fill="currentColor" stroke="none" />
-        <circle cx="7.5" cy="12.5" r="0.7" fill="currentColor" stroke="none" />
-        {/* Center alien head (in front) */}
-        <ellipse cx="12" cy="12" rx="3.5" ry="5" />
-        <circle cx="10.8" cy="11.5" r="0.8" fill="currentColor" stroke="none" />
-        <circle cx="13.2" cy="11.5" r="0.8" fill="currentColor" stroke="none" />
-        {/* Right alien head */}
-        <ellipse cx="17.5" cy="13" rx="3.2" ry="4.5" />
-        <circle cx="16.5" cy="12.5" r="0.7" fill="currentColor" stroke="none" />
-        <circle cx="18.5" cy="12.5" r="0.7" fill="currentColor" stroke="none" />
+        {/* Left alien head – balloon/teardrop shape with pointed chin */}
+        <path d="M3.3 11 C3.3 8, 9.7 8, 9.7 11 C9.7 13.5, 8 15, 6.5 17 C5 15, 3.3 13.5, 3.3 11Z" />
+        <ellipse cx="5.2" cy="10.8" rx="1" ry="1.3" fill="currentColor" stroke="none" />
+        <ellipse cx="7.8" cy="10.8" rx="1" ry="1.3" fill="currentColor" stroke="none" />
+        {/* Center alien head (in front) – larger, pointed chin */}
+        <path d="M8 10 C8 6.5, 16 6.5, 16 10 C16 13, 14 15.5, 12 18 C10 15.5, 8 13, 8 10Z" />
+        <ellipse cx="10.3" cy="9.8" rx="1.2" ry="1.5" fill="currentColor" stroke="none" />
+        <ellipse cx="13.7" cy="9.8" rx="1.2" ry="1.5" fill="currentColor" stroke="none" />
+        {/* Right alien head – balloon/teardrop shape with pointed chin */}
+        <path d="M14.3 11 C14.3 8, 20.7 8, 20.7 11 C20.7 13.5, 19 15, 17.5 17 C16 15, 14.3 13.5, 14.3 11Z" />
+        <ellipse cx="16.2" cy="10.8" rx="1" ry="1.3" fill="currentColor" stroke="none" />
+        <ellipse cx="18.8" cy="10.8" rx="1" ry="1.3" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
@@ -99,13 +99,13 @@ const TABS: { label: string; icon: React.ReactNode; href: string }[] = [
     href: "/profile",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
-        {/* Alien head */}
-        <ellipse cx="12" cy="11" rx="5" ry="7" />
-        {/* Large eyes */}
-        <ellipse cx="9.8" cy="10" rx="1.5" ry="1" fill="currentColor" stroke="none" />
-        <ellipse cx="14.2" cy="10" rx="1.5" ry="1" fill="currentColor" stroke="none" />
+        {/* Alien head – balloon/teardrop shape tapering to pointed chin */}
+        <path d="M6.5 10 C6.5 5, 17.5 5, 17.5 10 C17.5 14, 14.5 17, 12 20 C9.5 17, 6.5 14, 6.5 10Z" />
+        {/* Large wrap-around eyes */}
+        <ellipse cx="9.5" cy="10" rx="1.8" ry="2.2" fill="currentColor" stroke="none" />
+        <ellipse cx="14.5" cy="10" rx="1.8" ry="2.2" fill="currentColor" stroke="none" />
         {/* Small mouth */}
-        <line x1="11" y1="14" x2="13" y2="14" />
+        <line x1="11" y1="14.5" x2="13" y2="14.5" />
       </svg>
     ),
   },
